@@ -8,7 +8,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-export default function SingleUser() {
+export default function Invitation() {
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
       <ListItem alignItems="flex-start">
@@ -35,7 +35,18 @@ export default function SingleUser() {
                 style={{display:'flex',justifyContent:'flex-end'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+                
+              </Typography>
+              <Typography
+                sx={{}}
+                component="span"
+                variant="body2"
+                color="text.primary"
+                style={{display:'flex',justifyContent:'center'}}
+            
+              >
+              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
                 
               </Typography>
             </React.Fragment>
@@ -68,7 +79,18 @@ export default function SingleUser() {
                 style={{display:'flex',justifyContent:'flex-end'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+                
+              </Typography>
+              <Typography
+                sx={{}}
+                component="span"
+                variant="body2"
+                color="text.primary"
+                style={{display:'flex',justifyContent:'center'}}
+            
+              >
+              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
                 
               </Typography>
             </React.Fragment>
@@ -101,7 +123,18 @@ export default function SingleUser() {
                 style={{display:'flex',justifyContent:'flex-end'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+                
+              </Typography>
+              <Typography
+                sx={{}}
+                component="span"
+                variant="body2"
+                color="text.primary"
+                style={{display:'flex',justifyContent:'center'}}
+            
+              >
+              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
                 
               </Typography>
             </React.Fragment>
@@ -134,7 +167,18 @@ export default function SingleUser() {
                 style={{display:'flex',justifyContent:'flex-end'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+                
+              </Typography>
+              <Typography
+                sx={{}}
+                component="span"
+                variant="body2"
+                color="text.primary"
+                style={{display:'flex',justifyContent:'center'}}
+            
+              >
+              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
                 
               </Typography>
             </React.Fragment>
@@ -167,40 +211,18 @@ export default function SingleUser() {
                 style={{display:'flex',justifyContent:'flex-end'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
                 
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Fatima Mirzezade"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @F_Mirzezade
               </Typography>
               <Typography
                 sx={{}}
                 component="span"
                 variant="body2"
                 color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
+                style={{display:'flex',justifyContent:'center'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
                 
               </Typography>
             </React.Fragment>
@@ -209,73 +231,6 @@ export default function SingleUser() {
 
       </ListItem>
       <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Kamran Ekhberov"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Ekhberov_22
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Efsane Sadiqova"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Efso23
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
@@ -300,7 +255,18 @@ export default function SingleUser() {
                 style={{display:'flex',justifyContent:'flex-end'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+                
+              </Typography>
+              <Typography
+                sx={{}}
+                component="span"
+                variant="body2"
+                color="text.primary"
+                style={{display:'flex',justifyContent:'center'}}
+            
+              >
+              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
                 
               </Typography>
             </React.Fragment>
@@ -314,7 +280,7 @@ export default function SingleUser() {
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-          primary="Fatima Mirzezade"
+          primary="Ulfat Zakirli"
           secondary={
             <React.Fragment>
               <Typography
@@ -323,7 +289,7 @@ export default function SingleUser() {
                 variant="body2"
                 color="text.primary"
               >
-                @F_Mirzezade
+                @Zakirli
               </Typography>
               <Typography
                 sx={{}}
@@ -333,7 +299,18 @@ export default function SingleUser() {
                 style={{display:'flex',justifyContent:'flex-end'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+                
+              </Typography>
+              <Typography
+                sx={{}}
+                component="span"
+                variant="body2"
+                color="text.primary"
+                style={{display:'flex',justifyContent:'center'}}
+            
+              >
+              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
                 
               </Typography>
             </React.Fragment>
@@ -347,7 +324,7 @@ export default function SingleUser() {
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-          primary="Kamran Ekhberov"
+          primary="Ulfat Zakirli"
           secondary={
             <React.Fragment>
               <Typography
@@ -356,7 +333,7 @@ export default function SingleUser() {
                 variant="body2"
                 color="text.primary"
               >
-                @Ekhberov_22
+                @Zakirli
               </Typography>
               <Typography
                 sx={{}}
@@ -366,7 +343,18 @@ export default function SingleUser() {
                 style={{display:'flex',justifyContent:'flex-end'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+                
+              </Typography>
+              <Typography
+                sx={{}}
+                component="span"
+                variant="body2"
+                color="text.primary"
+                style={{display:'flex',justifyContent:'center'}}
+            
+              >
+              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
                 
               </Typography>
             </React.Fragment>
@@ -380,7 +368,7 @@ export default function SingleUser() {
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-          primary="Efsane Sadiqova"
+          primary="Ulfat Zakirli"
           secondary={
             <React.Fragment>
               <Typography
@@ -389,7 +377,7 @@ export default function SingleUser() {
                 variant="body2"
                 color="text.primary"
               >
-                @Efso23
+                @Zakirli
               </Typography>
               <Typography
                 sx={{}}
@@ -399,7 +387,18 @@ export default function SingleUser() {
                 style={{display:'flex',justifyContent:'flex-end'}}
             
               >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px',backgroundColor:'#000'}} variant="contained">Unfriend</Button>
+              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+                
+              </Typography>
+              <Typography
+                sx={{}}
+                component="span"
+                variant="body2"
+                color="text.primary"
+                style={{display:'flex',justifyContent:'center'}}
+            
+              >
+              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
                 
               </Typography>
             </React.Fragment>
@@ -409,7 +408,8 @@ export default function SingleUser() {
       </ListItem>
       <Divider variant="inset" component="li"/>
 
-
+      
+      
 
 
 
