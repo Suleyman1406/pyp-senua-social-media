@@ -5,20 +5,17 @@
   padding: 200px;
 }
 
-.profileWrapper {
-  display: flex;
-    margin-left: 10px;
-}
 
 .image {
-  width: 90px;
-  border-radius: 100%;
+  width: 100px;
+  border-radius: 50%;
   object-fit: cover;
   margin-right: 12px;
 }
 
 .name{
     font-size: 24px;
+    color: white;
 }
 
 .list {
