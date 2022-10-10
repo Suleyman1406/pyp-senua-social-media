@@ -109,7 +109,7 @@ const LoginPage = () => {
           </Link>
         </Box>
         <p style={{ textAlign: "center", marginTop: "50px" }}>
-          You don't have an account? <Link>Sign Up</Link>
+          You don't have an account? <Link to='/signup'>Sign Up</Link>
         </p>
       </Grid>
     </Grid>
