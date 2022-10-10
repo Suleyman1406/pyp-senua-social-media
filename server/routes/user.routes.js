@@ -10,14 +10,33 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
-  app.post("/api/test/all", controller.allAccess);
-
-  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
-
   app.get(
-    "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
+    "/api/user/:username",
+    [authJwt.verifyToken],
+    controller.getByUsername
   );
+
+  app.get("/api/user-friends", [authJwt.verifyToken], controller.getFriends);
+
+  app.post(
+    "/api/user-friends/:friendId",
+    [authJwt.verifyToken],
+    controller.addToFriends
+  );
+
+  app.delete(
+    "/api/user-friends/:friendId",
+    [authJwt.verifyToken],
+    controller.deleteFromFriends
+  );
+
+  // app.get("/api/test/all", controller.allAccess);
+
+  // app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+
+  // app.get(
+  //   "/api/test/admin",
+  //   [authJwt.verifyToken, authJwt.isAdmin],
+  //   controller.adminBoard
+  // );
 };

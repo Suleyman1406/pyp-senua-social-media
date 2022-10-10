@@ -5,8 +5,16 @@ const User = mongoose.model(
   new mongoose.Schema({
     email: String,
     username: String,
-    fullname: String,
+    profilePhotoURL: String,
+    name: String,
+    surname: String,
     password: String,
+    friends: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,
