@@ -1,0 +1,43 @@
+.nav {
+  background-color: salmon;
+  position: relative;
+  height: 94vh;
+  padding: 200px;
+}
+
+.profileWrapper {
+  display: flex;
+    margin-left: 10px;
+}
+
+.image {
+  width: 90px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.name{
+    font-size: 24px;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.listLi {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.route {
+  text-decoration: none;
+  color: black;
+}
+
+.logout {
+  position: absolute;
+  top: 500px;
+  border-radius: 100px;
+}
