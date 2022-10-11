@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "react-query";
@@ -47,11 +47,13 @@ const createUser = async (data) => {
 
 const LoginPage = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation(createUser, {
     onSuccess: async (data) => {
       queryClient.setQueryData("user", data);
       console.log("logged in");
+      navigate('/')
     },
     onError: (data) => {
       toast.error(data.response.data.message);
@@ -70,8 +72,9 @@ const LoginPage = () => {
       email: Yup.string().email().required("Email is required"),
       password: Yup.string().required("Required"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       mutate(values);
+      console.log(queryClient.getQueryData("user"))
     },
   });
   return (
