@@ -16,30 +16,31 @@ exports.getPosts = (_, res) => {
       }
 
       res.status(200).send(
-        users.map((user) => ({
+        result.map((post) => ({
+          description: post.description,
+          createdOn: post.createdOn,
+          imgUrl: post.imgUrl,
+          likes: post.likes,
           author: {
-            id: user._id,
-            username: user.username,
-            surname: user.surname,
-            name: user.name,
-            email: user.email,
-            profilePhotoURL: user.profilePhotoURL,
+            id: users.find(
+              (user) => user._id.toString() === post.createdBy.toString()
+            )._id,
+            username: users.find(
+              (user) => user._id.toString() === post.createdBy.toString()
+            ).username,
+            surname: users.find(
+              (user) => user._id.toString() === post.createdBy.toString()
+            ).surname,
+            name: users.find(
+              (user) => user._id.toString() === post.createdBy.toString()
+            ).name,
+            email: users.find(
+              (user) => user._id.toString() === post.createdBy.toString()
+            ).email,
+            profilePhotoURL: users.find(
+              (user) => user._id.toString() === post.createdBy.toString()
+            ).profilePhotoURL,
           },
-          _id: result.find(
-            (res) => res.createdBy.toString() === user._id.toString()
-          )._id,
-          likes: result.find(
-            (res) => res.createdBy.toString() === user._id.toString()
-          ).likes,
-          description: result.find(
-            (res) => res.createdBy.toString() === user._id.toString()
-          ).description,
-          imgUrl: result.find(
-            (res) => res.createdBy.toString() === user._id.toString()
-          ).imgUrl,
-          createdOn: result.find(
-            (res) => res.createdBy.toString() === user._id.toString()
-          ).createdOn,
         }))
       );
     });
