@@ -42,7 +42,7 @@ exports.signup = (req, res) => {
 
 exports.signin = (req, res) => {
   User.findOne({
-    username: req.body.username,
+    email: req.body.email,
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
@@ -80,6 +80,7 @@ exports.signin = (req, res) => {
         username: user.username,
         fullname: user.fullname,
         email: user.email,
+        profilePhotoURL: user.profilePhotoURL || null,
         roles: authorities,
       });
     });
