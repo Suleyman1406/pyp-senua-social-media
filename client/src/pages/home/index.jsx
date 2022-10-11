@@ -21,7 +21,7 @@ const HomePage = () => {
   }
   return (
     <div className={styles.container}>
-      <h1>Posts</h1>
+      <h2>Posts</h2>
       <div className={styles.cards}>
       {data &&
         data.map((item, id) => {

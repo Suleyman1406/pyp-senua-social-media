@@ -9,9 +9,8 @@
 .cards {
   padding: 60px;
 }
-h1{
+h2{
   margin:20px 0 0 250px;
-  font-family: 'Courier New', Courier, monospace;
 }
 .card {
   width: 60%;
@@ -46,3 +45,9 @@ footer {
 p{
   font-size: 13px;
 }
+
+/* @media screen and (min-width: 580px) and (max-width:900px) {
+body{
+background-color: green;
+}
+} */
