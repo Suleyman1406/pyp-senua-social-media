@@ -45,32 +45,6 @@ exports.getFriends = (req, res) => {
   });
 };
 
-exports.addToFriends = (req, res) => {
-  const { friendId } = req.params;
-  const { userId: currentUserId } = req;
-  if (friendId === currentUserId) {
-    res.status(500).send({ message: "Cannot add yourself as a friend" });
-    return;
-  }
-  User.updateOne(
-    { _id: currentUserId },
-    {
-      $addToSet: {
-        friends: {
-          _id: friendId,
-        },
-      },
-    },
-    (err) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-      res.status(200).send({ message: "Successfully added to friends" });
-    }
-  );
-};
-
 exports.deleteFromFriends = (req, res) => {
   const { friendId } = req.params;
   const { userId: currentUserId } = req;
@@ -88,7 +62,25 @@ exports.deleteFromFriends = (req, res) => {
         res.status(500).send({ message: err });
         return;
       }
-      res.status(200).send({ message: "Successfully removed from friends" });
+      User.updateOne(
+        { _id: friendId },
+        {
+          $unset: {
+            friends: {
+              _id: currentUserId,
+            },
+          },
+        },
+        (err) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+          res
+            .status(200)
+            .send({ message: "Successfully removed from friends" });
+        }
+      );
     }
   );
 };
