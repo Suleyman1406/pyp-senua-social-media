@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
@@ -17,6 +17,8 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Typography } from "@mui/material";
+import { useQueryClient } from "react-query";
+import DefPerson from "../../../images/defPerson.jpg";
 
 const categories = [
   {
@@ -51,15 +53,27 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function Navigator(props) {
+  const queryClient = useQueryClient();
+  const currentUser = queryClient.getQueryData("user");
+
+  console.log(currentUser);
+
   const { ...other } = props;
   return (
     <Drawer variant="permanent" {...other}>
-      <List disablePadding >
+      <List disablePadding>
         {categories.map(({ id, children }) => (
           <Box key={id} sx={{ bgcolor: "#fff", py: 3 }}>
-            <ListItem sx={{ py: 3, px: 3 }}>
-              <img src={id} className={styles.image} alt="" />
-              <p className={styles.name}>Username</p>
+            <ListItem
+              sx={{ px: 3 }}
+              style={{ display: "block", textAlign: "center" }}
+            >
+              <img
+                src={currentUser?.profilePhotoURL ?? DefPerson}
+                className={styles.image}
+                alt=""
+              />
+              <p className={styles.name}>{currentUser?.username ?? "user"}</p>
             </ListItem>
             {children.map(({ id: childId, icon, active, to }) => (
               <Link to={to} className={styles.route}>
@@ -77,16 +91,16 @@ export default function Navigator(props) {
                 </ListItem>
               </Link>
             ))}
-            <ColorButton sx={{ mx: 5, my: 5, px: 7 }}>Senua</ColorButton>
-            <ColorButton sx={{ mx: 5, mt: 44, px: 6, display: "block" }}>
-              <LogoutIcon
-                fontSize="small"
-                style={{ position: "absolute", top: 7, left: 26 }}
-              />
-              Logout
-            </ColorButton>
+            <ColorButton sx={{ mx: 5, my: 5, px: 7 }}>Add Post</ColorButton>
           </Box>
         ))}
+        <Button variant="text" sx={{ mx: 5, mt: 7, px: 6 }}>
+          <LogoutIcon
+            fontSize="small"
+            sx={{mr: 1}}
+          />
+          Logout
+        </Button>
       </List>
     </Drawer>
   );
