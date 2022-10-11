@@ -16,6 +16,7 @@ import { blue } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { Typography } from "@mui/material";
 
 const categories = [
   {
@@ -31,15 +32,17 @@ const categories = [
 
 const item = {
   px: 5,
-  color: "rgba(255, 255, 255, 0.8)",
+  py: 1.5,
+  color: "#000",
   "&:hover, &:focus": {
-    bgcolor: "rgba(255, 255, 255, 0.08)",
+    bgcolor: "#00798C",
+    color: "white",
   },
 };
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(blue[500]),
-  backgroundColor: blue[700],
+  backgroundColor: "#00798C",
   marginLeft: 10,
   borderRadius: 100,
   "&:hover": {
@@ -51,26 +54,35 @@ export default function Navigator(props) {
   const { ...other } = props;
   return (
     <Drawer variant="permanent" {...other}>
-      <List disablePadding>
+      <List disablePadding >
         {categories.map(({ id, children }) => (
-          <Box key={id} sx={{ bgcolor: "#101F26", py: 3, minHeight: "100vh" }}>
+          <Box key={id} sx={{ bgcolor: "#fff", py: 3 }}>
             <ListItem sx={{ py: 3, px: 3 }}>
               <img src={id} className={styles.image} alt="" />
               <p className={styles.name}>Username</p>
             </ListItem>
             {children.map(({ id: childId, icon, active, to }) => (
               <Link to={to} className={styles.route}>
-                <ListItem disablePadding key={childId} sx={{ py: 1.8 }}>
+                <ListItem disablePadding key={childId}>
                   <ListItemButton selected={active} sx={item}>
                     <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText>{childId}</ListItemText>
+                    <ListItemText
+                      primary={
+                        <Typography style={{ fontWeight: "bolder" }}>
+                          {childId}
+                        </Typography>
+                      }
+                    />
                   </ListItemButton>
                 </ListItem>
               </Link>
             ))}
             <ColorButton sx={{ mx: 5, my: 5, px: 7 }}>Senua</ColorButton>
-            <ColorButton sx={{ mx: 5, mt: 19.8, px: 6, display: "block" }}>
-              <LogoutIcon fontSize="small" />
+            <ColorButton sx={{ mx: 5, mt: 44, px: 6, display: "block" }}>
+              <LogoutIcon
+                fontSize="small"
+                style={{ position: "absolute", top: 7, left: 26 }}
+              />
               Logout
             </ColorButton>
           </Box>
