@@ -10,11 +10,13 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/api/posts", [authJwt.verifyToken], controller.getPosts);
+  app.get("/api/posts/all", [authJwt.verifyToken], controller.getPosts);
+
+  app.post("/api/posts/create", [authJwt.verifyToken], controller.createPost);
 
   app.post(
-    "/api/posts/create/:toId",
+    "/api/posts/toggle-like/:id",
     [authJwt.verifyToken],
-    controller.createRequest
+    controller.toggleLike
   );
 };

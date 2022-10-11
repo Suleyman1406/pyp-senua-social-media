@@ -1,21 +1,94 @@
 const db = require("../models");
 const Post = db.post;
+const User = db.user;
 
-exports.getPosts = (req, res) => {
+exports.getPosts = (_, res) => {
   Post.find({}, (err, result) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
-    res.status(200).send(result);
+    const userIdList = result.map((res) => res.createdBy);
+    User.find({ _id: { $in: userIdList } }, (err, users) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      res.status(200).send(
+        users.map((user) => ({
+          author: {
+            id: user._id,
+            username: user.username,
+            surname: user.surname,
+            name: user.name,
+            email: user.email,
+            profilePhotoURL: user.profilePhotoURL,
+          },
+          _id: result.find(
+            (res) => res.createdBy.toString() === user._id.toString()
+          )._id,
+          likes: result.find(
+            (res) => res.createdBy.toString() === user._id.toString()
+          ).likes,
+          description: result.find(
+            (res) => res.createdBy.toString() === user._id.toString()
+          ).description,
+          imgUrl: result.find(
+            (res) => res.createdBy.toString() === user._id.toString()
+          ).imgUrl,
+          createdOn: result.find(
+            (res) => res.createdBy.toString() === user._id.toString()
+          ).createdOn,
+        }))
+      );
+    });
   });
 };
 
-exports.addPost = (req, res) => {
+exports.createPost = (req, res) => {
   const { userId: currentUserId } = req;
   const { description, imgUrl } = req.body;
   const post = new Post({
+    createdBy: currentUserId,
     description,
     imgUrl,
   });
+  post.save((err) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    res.send({ message: "Post was created successfully!" });
+  });
+};
+
+exports.toggleLike = async (req, res) => {
+  const { userId: currentUserId } = req;
+  const { id } = req.params;
+
+  let result = await Post.updateOne(
+    { _id: id },
+    {
+      $addToSet: {
+        likes: {
+          _id: currentUserId,
+        },
+      },
+    }
+  );
+  if (result.nModified === 0) {
+    await Post.updateOne(
+      { _id: id },
+      {
+        $unset: {
+          likes: { _id: currentUserId },
+        },
+      }
+    );
+    res.status(200).send({ message: "Post was unliked successfully!" });
+  } else {
+    res.status(200).send({ message: "Post was liked successfully!" });
+  }
 };
