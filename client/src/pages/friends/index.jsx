@@ -28,10 +28,10 @@ const FriendsPage = () => {
           spacing={2}
           direction="row"
         >
-          <Button style={{ width: "250px",marginTop:'20px' }} size="large" variant="outlined" onClick={()=>setAddModal(!addModal)}>
+          <Button style={{ width: "250px",marginTop:'22px' }} size="large" variant="outlined" onClick={()=>setAddModal(!addModal)}>
             Add Friends
           </Button>
-          <Button style={{ width: "250px",marginTop:'20px' }} size="large" variant="contained" onClick={()=>setReqModal(!reqModal)}>
+          <Button style={{ width: "250px",marginTop:'22px' }} size="large" variant="contained" onClick={()=>setReqModal(!reqModal)}>
             Requests
           </Button>
         </Stack>
