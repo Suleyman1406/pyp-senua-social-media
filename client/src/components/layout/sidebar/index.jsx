@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
