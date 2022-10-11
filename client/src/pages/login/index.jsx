@@ -8,7 +8,8 @@ import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
 
 import GoogleIcon from "@mui/icons-material/Google";
 import LoginSVG from "../../images/login.svg";
@@ -27,6 +28,10 @@ const styles = {
     border: "1px solid black",
     borderRadius: "10px",
   },
+  errorLink: { color: "red", fontSize: "12px", margin: "0" },
+  inputHeight: {
+    height: "45px"
+  }
 };
 
 const LoginPage = () => {
@@ -44,75 +49,78 @@ const LoginPage = () => {
     },
   });
   return (
-    <Grid container spacing={5} sx={{pt: 5, pl: 2}}>
-      <Grid item xs={6}>
-        <img src={LoginSVG} alt="Login" style={{ width: "100%" }} />
-      </Grid>
-      <Grid item xs={4}>
-        <Box component="form" onSubmit={formik.handleSubmit} display="block">
-          <h2 style={{ fontSize: "40px" }}>LogIn</h2>
-          <FormControl
-            fullWidth
-            style={{ height: "50px" }}
-            sx={{ mt: 1 }}
-            variant="standard"
-            onSubmit={formik.handleSubmit}
-          >
-            <InputLabel htmlFor="standard-adornment-amount">Email</InputLabel>
-            <Input
-              id="standard-adornment-amount"
-              {...formik.getFieldProps("email")}
-            />
-            {formik.touched.email && formik.errors.email ? (
-              <p style={{ color: "red", fontSize: "13px" }}>
-                {formik.errors.email}
-              </p>
-            ) : null}
-          </FormControl>
-          <FormControl
-            fullWidth
-            style={{ height: "50px" }}
-            sx={{ mt: 4 }}
-            variant="standard"
-          >
-            <InputLabel htmlFor="standard-adornment-amount">
-              Password
-            </InputLabel>
-            <Input
-              id="standard-adornment-amount"
-              type="password"
-              {...formik.getFieldProps("password")}
-            />
-            {formik.touched.password && formik.errors.password ? (
-              <p style={{ color: "red", fontSize: "13px" }}>
-                {formik.errors.password}
-              </p>
-            ) : null}
-          </FormControl>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{ mt: 5 }}
-          >
-            <Link style={styles.link}>Forgot Password?</Link>
-            <Button variant="contained" type="submit">
-              Login
-            </Button>
+    <Container maxWidth="lg">
+      <Grid
+        container
+        style={{ height: "100vh" }}
+        alignItems="center"
+        justifyContent='space-between'
+      >
+        <Grid item xs={6}>
+          <img src={LoginSVG} alt="Login" style={{ width: "100%" }} />
+        </Grid>
+        <Grid item xs={5}>
+          <Box component="form" onSubmit={formik.handleSubmit} display="block">
+            <h2 style={{ fontSize: "40px", margin: "0" }}>Login</h2>
+            <FormControl
+              fullWidth
+              style={styles.inputHeight}
+              sx={{ mt: 1 }}
+              variant="standard"
+              onSubmit={formik.handleSubmit}
+            >
+              <InputLabel htmlFor="standard-adornment-amount">Email</InputLabel>
+              <Input
+                id="standard-adornment-amount"
+                {...formik.getFieldProps("email")}
+              />
+              {formik.touched.email && formik.errors.email ? (
+                <p style={styles.errorLink}>{formik.errors.email}</p>
+              ) : null}
+            </FormControl>
+            <FormControl
+              fullWidth
+              style={styles.inputHeight}
+              sx={{ mt: 2 }}
+              variant="standard"
+            >
+              <InputLabel htmlFor="standard-adornment-amount">
+                Password
+              </InputLabel>
+              <Input
+                id="standard-adornment-amount"
+                type="password"
+                {...formik.getFieldProps("password")}
+              />
+              {formik.touched.password && formik.errors.password ? (
+                <p style={styles.errorLink}>{formik.errors.password}</p>
+              ) : null}
+            </FormControl>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{ mt: 5 }}
+            >
+              <Link style={styles.link}>Forgot Password?</Link>
+              <Button variant="contained" type="submit">
+                Login
+              </Button>
+            </Box>
           </Box>
-        </Box>
-        <p style={{ textAlign: "center", fontSize: "20px" }}>or</p>
-        <Box display="flex" justifyContent="center">
-          <Link style={styles.signInLink}>
-            <GoogleIcon sx={{ fontSize: 20, mr: 1 }} />
-            <span style={{ fontSize: "15px" }}>Sign In with Google</span>
-          </Link>
-        </Box>
-        <p style={{ textAlign: "center", marginTop: "50px" }}>
-          You don't have an account? <Link to='/signup'>Sign Up</Link>
-        </p>
+          <p style={{ textAlign: "center", fontSize: "20px" }}>or</p>
+          <Box display="flex" justifyContent="center">
+            <Link style={styles.signInLink}>
+              <GoogleIcon sx={{ fontSize: 20, mr: 1 }} />
+              <span style={{ fontSize: "15px" }}>Sign In with Google</span>
+            </Link>
+          </Box>
+          <p style={{ textAlign: "center", marginTop: "50px" }}>
+            You don't have an account? <Link to="/signup">Sign Up</Link>
+          </p>
+        </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 };
 
