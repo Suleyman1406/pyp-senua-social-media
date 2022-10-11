@@ -118,7 +118,7 @@
     padding: 0.5rem 1rem;
     color: var(--clr-red-dark);
     border: 1px solid var(--clr-red-dark);
-    margin-top: 2.25rem;
+    margin-top: 4rem;
     border-radius: var(--radius);
   }
   .clear-btn:hover {
@@ -192,10 +192,13 @@
   }
   .modal .clear-btn,
   .modal .confirm-btn {
-    margin-top: 1rem;
+    margin-top: 6rem;
   }
   .btn-container {
     display: flex;
     justify-content: space-around;
   }
   
+  .clear-btn{
+    margin-top: 5rem;
+  }
