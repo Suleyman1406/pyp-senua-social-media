@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import {postModuleContext} from '../../../context/postModuleContext'
+import React, { useContext, useCallback } from "react";
+import { postModuleContext } from "../../../context/postModuleContext";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
@@ -20,6 +20,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { Typography } from "@mui/material";
 import { useQueryClient } from "react-query";
 import DefPerson from "../../../images/defPerson.jpg";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const categories = [
   {
@@ -56,10 +58,17 @@ const ColorButton = styled(Button)(({ theme }) => ({
 export default function Navigator(props) {
   const queryClient = useQueryClient();
   const currentUser = queryClient.getQueryData("user");
+  const navigate = useNavigate();
 
   const { setShow } = useContext(postModuleContext);
 
-  console.log(currentUser);
+  const signOut = useCallback(() => {
+    axios.post("http://localhost:8080/api/auth/signout").then(() => {
+      localStorage.removeItem("user");
+      queryClient.setQueryData("user", null);
+      navigate("/login");
+    });
+  }, [queryClient, navigate]);
 
   const { ...other } = props;
   return (
@@ -79,7 +88,7 @@ export default function Navigator(props) {
               <p className={styles.name}>{currentUser?.username ?? "user"}</p>
             </ListItem>
             {children.map(({ id: childId, icon, active, to }) => (
-              <Link to={to} className={styles.route}>
+              <Link to={to} className={styles.route} key={childId}>
                 <ListItem disablePadding key={childId}>
                   <ListItemButton selected={active} sx={item}>
                     <ListItemIcon>{icon}</ListItemIcon>
@@ -94,14 +103,16 @@ export default function Navigator(props) {
                 </ListItem>
               </Link>
             ))}
-            <ColorButton sx={{ mx: 5, my: 5, px: 7 }} onClick={()=> setShow(true)}>Add Post</ColorButton>
+            <ColorButton
+              sx={{ mx: 5, my: 5, px: 7 }}
+              onClick={() => setShow(true)}
+            >
+              Add Post
+            </ColorButton>
           </Box>
         ))}
-        <Button variant="text" sx={{ mx: 5, mt: 7, px: 6 }}>
-          <LogoutIcon
-            fontSize="small"
-            sx={{mr: 1}}
-          />
+        <Button variant="text" onClick={signOut} sx={{ mx: 5, mt: 7, px: 6 }}>
+          <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
           Logout
         </Button>
       </List>
