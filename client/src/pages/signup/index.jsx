@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
@@ -27,6 +27,7 @@ const styles = {
 
 const SignupPage = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -67,6 +68,9 @@ const SignupPage = () => {
           setLoading(false);
           if (res.status == 200) {
             toast.success(res.data.message);
+            setTimeout(()=> {
+              navigate('/login')
+            }, 1500)
           }
         })
         .catch((res) => {
