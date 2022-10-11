@@ -16,16 +16,14 @@ module.exports = function (app) {
     controller.getByUsername
   );
 
-  app.get("/api/user-friends", [authJwt.verifyToken], controller.getFriends);
-
-  app.post(
-    "/api/user-friends/:friendId",
+  app.get(
+    "/api/user/friends/all",
     [authJwt.verifyToken],
-    controller.addToFriends
+    controller.getFriends
   );
 
   app.delete(
-    "/api/user-friends/:friendId",
+    "/api/user/friends/:friendId",
     [authJwt.verifyToken],
     controller.deleteFromFriends
   );
