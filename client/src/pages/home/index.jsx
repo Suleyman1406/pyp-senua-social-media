@@ -3,6 +3,7 @@ import styles from "./home.module.css";
 import axios from "axios";
 import { useQuery } from "react-query";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import { Avatar } from "@mui/material";
 const HomePage = () => {
   const { isLoading, isError, data, error } = useQuery(
     "users-posts",
@@ -20,17 +21,22 @@ const HomePage = () => {
   }
   return (
     <div className={styles.container}>
+      <h1>Posts</h1>
+      <div className={styles.cards}>
       {data &&
         data.map((item, id) => {
           return (
             <div className={styles.card} key={item.id}>
               <header>
-                <img
-                  className={styles.profile}
+                <Avatar
+                  alt="Remy Sharp"
                   src="https://media-exp1.licdn.com/dms/image/C5603AQEkiWewupNGQQ/profile-displayphoto-shrink_800_800/0/1538160028383?e=2147483647&v=beta&t=236vQLxb5dWdBLM-WMGKQmG_-_CErnk9iG18DIlYavk"
-                  alt=""
+                  sx={{ width: 60, height: 60 }}
                 />
-                <h1>{item.name?.first}</h1>
+                <div className={styles.user_info}>
+                  <h4>Name Surname</h4>
+                  <p>Username</p>
+                </div>
               </header>
               <main>
                 <p>
@@ -41,10 +47,13 @@ const HomePage = () => {
                   wizards called Muggles (not a drop of magical blood in their
                   veins).
                 </p>
-                <img
-                  src="https://code.edu.az/wp-content/uploads/2021/09/mezunlarimiz.jpeg"
-                  alt=""
-                />
+                <div className={styles.main_img_container}>
+                  <img
+                    src="https://code.edu.az/wp-content/uploads/2021/09/mezunlarimiz.jpeg"
+                    className={styles.main_img}
+                    alt=""
+                  />
+                </div>
               </main>
               <footer>
                 <div style={{ display: "flex" }}>
@@ -55,6 +64,7 @@ const HomePage = () => {
             </div>
           );
         })}
+</div>
     </div>
   );
 };
