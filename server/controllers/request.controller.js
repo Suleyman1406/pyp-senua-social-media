@@ -9,7 +9,22 @@ exports.getRequests = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }
-    res.status(200).send(requests);
+    let users = requests.map((request) => request.from);
+    User.find({ _id: { $in: users } }, (err, userList) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      res.status(200).send(
+        userList.map((user) => ({
+          id: user._id,
+          username: user.username,
+          fullname: user.fullname,
+          email: user.email,
+          profilePhotoURL: user.profilePhotoURL || null,
+        }))
+      );
+    });
   });
 };
 

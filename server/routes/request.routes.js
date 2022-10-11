@@ -10,7 +10,7 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/api/requests", [authJwt.verifyToken], controller.getRequests);
+  app.get("/api/requests/all", [authJwt.verifyToken], controller.getRequests);
 
   app.post(
     "/api/requests/create/:toId",
