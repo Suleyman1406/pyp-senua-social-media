@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
@@ -10,6 +13,7 @@ import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import SignupSVG from "../../images/signup.svg";
@@ -22,11 +26,14 @@ const styles = {
 };
 
 const SignupPage = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
+
   const formik = useFormik({
     initialValues: {
       email: "",
-      firstname: "",
-      lastname: "",
+      name: "",
+      surname: "",
       username: "",
       password: "",
       passwordconfirm: "",
@@ -37,10 +44,10 @@ const SignupPage = () => {
       username: Yup.string()
         .min(3, "Must be at least 3 characters")
         .required("Required"),
-      firstname: Yup.string()
+      name: Yup.string()
         .min(2, "Must be at least 2 characters")
         .required("Required"),
-      lastname: Yup.string()
+      surname: Yup.string()
         .min(3, "Must be at least 3 characters")
         .required("Required"),
       password: Yup.string()
@@ -54,7 +61,22 @@ const SignupPage = () => {
         .required("Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      setLoading(true);
+      axios
+        .post("http://localhost:8080/api/auth/signup", values)
+        .then((res) => {
+          setLoading(false);
+          if (res.status == 200) {
+            toast.success(res.data.message);
+            setTimeout(()=> {
+              navigate('/login')
+            }, 1500)
+          }
+        })
+        .catch((res) => {
+          setLoading(false);
+          toast.error(res.response.data.message);
+        });
     },
   });
   return (
@@ -62,13 +84,14 @@ const SignupPage = () => {
       <Grid
         container
         style={{ height: "100vh" }}
+        spacing={2}
         alignItems="center"
         justifyContent="space-between"
       >
-        <Grid item xs={6} display="flex" alignItems="center">
+        <Grid item lg={5} md={6} sm={12} display="flex" alignItems="center">
           <img src={SignupSVG} alt="Login" style={{ width: "100%" }} />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item lg={5} md={6} sm={12}>
           <Box component="form" onSubmit={formik.handleSubmit} display="block">
             <h2 style={{ fontSize: "40px", margin: "0" }}>Sign Up</h2>
             <FormControl
@@ -100,7 +123,7 @@ const SignupPage = () => {
               </InputLabel>
               <Input
                 id="standard-adornment-amount"
-                {...formik.getFieldProps("firstname")}
+                {...formik.getFieldProps("name")}
               />
               {formik.touched.firstname && formik.errors.firstname ? (
                 <p style={styles.errorLink}>{formik.errors.firstname}</p>
@@ -118,7 +141,7 @@ const SignupPage = () => {
               </InputLabel>
               <Input
                 id="standard-adornment-amount"
-                {...formik.getFieldProps("lastname")}
+                {...formik.getFieldProps("surname")}
               />
               {formik.touched.lastname && formik.errors.lastname ? (
                 <p style={styles.errorLink}>{formik.errors.lastname}</p>
@@ -188,13 +211,20 @@ const SignupPage = () => {
               <Link to="/login">
                 <KeyboardBackspaceIcon />
               </Link>
-              <Button variant="contained" type="submit">
-                Signup
-              </Button>
+              {loading ? (
+                <LoadingButton loading variant="outlined">
+                  Submit
+                </LoadingButton>
+              ) : (
+                <Button variant="contained" type="submit">
+                  Signup
+                </Button>
+              )}
             </Box>
           </Box>
         </Grid>
       </Grid>
+      <Toaster />
     </Container>
   );
 };
