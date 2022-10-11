@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, {useContext, useCallback} from "react";
+import {postModuleContext} from '../../../context/postModuleContext'
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
@@ -59,6 +60,7 @@ export default function Navigator(props) {
   const currentUser = queryClient.getQueryData("user");
   const navigate = useNavigate();
 
+  const { setShow } = useContext(postModuleContext);
   const signOut = useCallback(() => {
     axios.post("http://localhost:8080/api/auth/signout").then(() => {
       localStorage.removeItem("user");
@@ -100,7 +102,7 @@ export default function Navigator(props) {
                 </ListItem>
               </Link>
             ))}
-            <ColorButton sx={{ mx: 5, my: 5, px: 7 }}>Add Post</ColorButton>
+            <ColorButton sx={{ mx: 5, my: 5, px: 7 }} onClick={()=> setShow(true)}>Add Post</ColorButton>
           </Box>
         ))}
         <Button variant="text" onClick={signOut} sx={{ mx: 5, mt: 7, px: 6 }}>
