@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, {useContext} from "react";
+import {postModuleContext} from '../../../context/postModuleContext'
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
@@ -56,6 +57,8 @@ export default function Navigator(props) {
   const queryClient = useQueryClient();
   const currentUser = queryClient.getQueryData("user");
 
+  const { setShow } = useContext(postModuleContext);
+
   console.log(currentUser);
 
   const { ...other } = props;
@@ -91,7 +94,7 @@ export default function Navigator(props) {
                 </ListItem>
               </Link>
             ))}
-            <ColorButton sx={{ mx: 5, my: 5, px: 7 }}>Add Post</ColorButton>
+            <ColorButton sx={{ mx: 5, my: 5, px: 7 }} onClick={()=> setShow(true)}>Add Post</ColorButton>
           </Box>
         ))}
         <Button variant="text" sx={{ mx: 5, mt: 7, px: 6 }}>

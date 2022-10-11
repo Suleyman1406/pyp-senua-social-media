@@ -4,6 +4,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { Avatar } from "@mui/material";
+
 const HomePage = () => {
   const { isLoading, isError, data, error } = useQuery(
     "users-posts",
