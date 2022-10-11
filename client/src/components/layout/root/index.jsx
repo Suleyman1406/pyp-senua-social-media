@@ -4,9 +4,11 @@ import Sidebar from "../sidebar";
 
 const Root = () => {
   return (
-    <div style={{ display: "flex", width: "90%", margin: "auto" }}>
+    <div style={{ display: "flex" }}>
       <Sidebar />
-      <Outlet />
+      <div style={{ width: "calc(100% - 270px)", marginLeft: "auto" }}>
+        <Outlet />
+      </div>
     </div>
   );
 };
