@@ -11,7 +11,6 @@ import RequestsModal from "components/pages/requests-modal/RequestsModal";
 const FriendsPage = () => {
   const [addModal, setAddModal]=useState(false)
   const [reqModal,setReqModal]=useState(false)
-
   return (
     <React.Fragment>
       <CssBaseline />
