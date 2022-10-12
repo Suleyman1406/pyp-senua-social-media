@@ -56,7 +56,7 @@ exports.createPost = (req, res) => {
   const post = new Post({
     createdBy: currentUserId,
     description,
-    imgUrl: file.path,
+    imgUrl: file?.path || null,
   });
   post.save((err) => {
     if (err) {
