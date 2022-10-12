@@ -82,6 +82,7 @@ exports.signin = (req, res) => {
         email: user.email,
         profilePhotoURL: user.profilePhotoURL || null,
         roles: authorities,
+        token,
       });
     });
 };

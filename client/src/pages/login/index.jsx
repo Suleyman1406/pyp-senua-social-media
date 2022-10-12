@@ -52,8 +52,11 @@ const LoginPage = () => {
   const { mutate, isLoading } = useMutation(createUser, {
     onSuccess: async (data) => {
       queryClient.setQueryData("user", data);
-      console.log("logged in");
-      navigate('/')
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...data, createdOn: Date.now() })
+      );
+      navigate("/");
     },
     onError: (data) => {
       toast.error(data.response.data.message);
@@ -74,7 +77,7 @@ const LoginPage = () => {
     }),
     onSubmit: (values) => {
       mutate(values);
-      console.log(queryClient.getQueryData("user"))
+      console.log(queryClient.getQueryData("user"));
     },
   });
   return (
