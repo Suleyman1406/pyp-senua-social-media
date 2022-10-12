@@ -15,7 +15,7 @@ export default function SingleFriend() {
   const { isLoading, isError, data, error } = useQuery(
     "users-posts",
     async () => {
-      const { data } = await axios.get("http://localhost:8080/api/posts/all", {
+      const { data } = await axios.get("http://localhost:8080/api/user/friends/all", {
         headers: {
           "x-access-token": user?.token,
           "content-type": "application/json",
@@ -26,12 +26,15 @@ export default function SingleFriend() {
   );
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
+      {
+        data?.map((item)=>{
+          return(
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="https://avatars.githubusercontent.com/u/88549805?v=4" />
         </ListItemAvatar>
         <ListItemText
-          primary="Ulfat Zakirli"
+          primary={item.author.name}
           secondary={
             <React.Fragment>
               <Typography
@@ -40,7 +43,7 @@ export default function SingleFriend() {
                 variant="body2"
                 color="text.primary"
               >
-                @Zakirli
+                {item.author.email}
               </Typography>
               <Typography
                 sx={{}}
@@ -59,6 +62,10 @@ export default function SingleFriend() {
         />
 
       </ListItem>
+
+          )
+        })
+      }
       <Divider variant="inset" component="li"/>
 
    
