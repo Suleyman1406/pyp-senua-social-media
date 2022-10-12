@@ -16,33 +16,35 @@ exports.getPosts = (_, res) => {
       }
 
       res.status(200).send(
-        result.map((post) => ({
-          id: post._id,
-          description: post.description,
-          createdOn: post.createdOn,
-          imgUrl: post.imgUrl,
-          likes: post.likes,
-          author: {
-            id: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            )._id,
-            username: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).username,
-            surname: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).surname,
-            name: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).name,
-            email: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).email,
-            profilePhotoURL: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).profilePhotoURL,
-          },
-        }))
+        result
+          .map((post) => ({
+            id: post._id,
+            description: post.description,
+            createdOn: post.createdOn,
+            imgUrl: post.imgUrl,
+            likes: post.likes,
+            author: {
+              id: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              )._id,
+              username: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).username,
+              surname: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).surname,
+              name: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).name,
+              email: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).email,
+              profilePhotoURL: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).profilePhotoURL,
+            },
+          }))
+          .sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn))
       );
     });
   });
