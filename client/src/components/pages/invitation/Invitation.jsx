@@ -12,9 +12,8 @@ import  axios  from 'axios';
 
 export default function Invitation() {
   const user = JSON.parse(localStorage.getItem("user"));
-
   const { isLoading, isError, data, error } = useQuery(
-    "users-posts",
+    "user-requests",
     async () => {
       const { data } = await axios.get("http://localhost:8080/api/requests/all", {
         headers: {
@@ -22,9 +21,23 @@ export default function Invitation() {
           "content-type": "application/json",
         },
       });
+
+     
+
       return data;
     }
   );
+
+//   const acceptRequest=async ()=>{
+//     const { data } = await axios.get("http://localhost:8080/api/requests/confirm", {
+//     headers: {
+//       "x-access-token": user?.token,
+//       "content-type": "application/json",
+//     },
+//   }
+// }
+
+  console.log(data);
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
 {
@@ -35,7 +48,7 @@ export default function Invitation() {
         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
       </ListItemAvatar>
       <ListItemText
-        primary={item.author.name}
+        primary={item.username}
         secondary={
           <React.Fragment>
             <Typography
@@ -44,7 +57,7 @@ export default function Invitation() {
               variant="body2"
               color="text.primary"
             >
-              {item.author.email}
+              {item.email}
             </Typography>
             <Typography
               sx={{}}

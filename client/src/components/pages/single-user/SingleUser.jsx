@@ -17,9 +17,9 @@ export default function SingleUser() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const { isLoading, isError, data, error } = useQuery(
-    "users-posts",
+    "user-friends",
     async () => {
-      const { data } = await axios.get("http://localhost:8080/api/posts/all", {
+      const { data } = await axios.get("http://localhost:8080/api/user/friends/all", {
         headers: {
           "x-access-token": user?.token,
           "content-type": "application/json",
@@ -43,7 +43,7 @@ export default function SingleUser() {
           />
         </ListItemAvatar>
         <ListItemText
-          primary={item.author.name}
+          primary={item.name}
           secondary={
             <React.Fragment>
               <Typography
@@ -52,7 +52,7 @@ export default function SingleUser() {
                 variant="body2"
                 color="text.primary"
               >
-                {item.author.email}
+                {item.email}
               </Typography>
               <Typography
                 sx={{}}
