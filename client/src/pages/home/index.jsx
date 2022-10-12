@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./home.module.css";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -29,6 +29,16 @@ const HomePage = () => {
   if (isError) {
     return <div>{JSON.stringify(error)}</div>;
   }
+  function sendLike() {
+    console.log('likedd');
+    axios.post('http://localhost:8080/api/posts/toggle-like/634558d0b33024a29a2335ff',{} ,{
+      headers: {
+        "x-access-token": user?.token,
+        "content-type": "application/json",
+      },
+    })
+      .then(data => console.log('data', data.data.liked))
+  }
 
   return (
     <div className={styles.container}>
@@ -45,8 +55,10 @@ const HomePage = () => {
                     sx={{ width: 60, height: 60 }}
                   />
                   <div className={styles.user_info}>
-                    <h4>{`${item.author?.name} ${item.author?.surname}`}</h4>
-                    <p>{item.author?.username}</p>
+                    <h4>
+                      {item.author.name} {item.author.surname}
+                    </h4>
+                    <p>{item.author.username}</p>
                   </div>
                 </header>
                 <main>
@@ -63,9 +75,11 @@ const HomePage = () => {
                 </main>
                 <footer>
                   <div style={{ display: "flex" }}>
-                    <ThumbUpOffAltIcon />
+                    {
+                      <ThumbUpOffAltIcon style={{ color: item.likes.includes(user.id) ? 'blue' : '' }} onClick={sendLike} />
+                    }
                     <span style={{ marginTop: "2px", marginLeft: "3px" }}>
-                      2
+                      {item.likes.length}
                     </span>
                   </div>
                 </footer>

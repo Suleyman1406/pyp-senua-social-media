@@ -1,6 +1,22 @@
 const db = require("../models");
 const User = db.user;
 
+exports.updateUser = (req, res) => {
+  const { userId: currentUserId, file } = req;
+  const { name, surname } = req.body;
+  const data = {};
+  if (name) data.name = name;
+  if (surname) data.surname = surname;
+  if (file) data.profilePhotoURL = file.path;
+  User.updateOne({ _id: currentUserId }, data, (err) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.status(200).send({ message: "Successfully updated" });
+  });
+};
+
 exports.getByUsername = (req, res) => {
   const { username } = req.params;
   User.findOne({ username }, (err, user) => {
