@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./home.module.css";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -7,7 +7,7 @@ import { Avatar } from "@mui/material";
 
 const HomePage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
+  // const [controlLike, setControlLike] = useState(false)
   const { isLoading, isError, data, error } = useQuery(
     "users-posts",
     async () => {
@@ -20,6 +20,8 @@ const HomePage = () => {
       return data;
     }
   );
+  console.log(data);
+  console.log('USER', user);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -28,6 +30,22 @@ const HomePage = () => {
   if (isError) {
     return <div>{JSON.stringify(error)}</div>;
   }
+
+  // control user likes or not 
+ 
+  // data.forEach(item => {
+  //   item.likes.forEach(element => {
+  //     if (element == user.id) {
+  //       console.log(true);
+  //       setControlLike(true)
+  //     }
+  //     else {
+  //       console.log(false);
+  //       setControlLike(true)
+  //     }
+  //   });
+  // })
+
 
   return (
     <div className={styles.container}>
@@ -44,32 +62,25 @@ const HomePage = () => {
                     sx={{ width: 60, height: 60 }}
                   />
                   <div className={styles.user_info}>
-                    <h4>Name Surname</h4>
-                    <p>Username</p>
+                    <h4>
+                      {item.author.name} {item.author.surname}
+                    </h4>
+                    <p>{item.author.username}</p>
                   </div>
                 </header>
                 <main>
-                  <p>
-                    What did the Dursleys care if Harry lost his place on the
-                    House Quidditch team because he hadn’t practiced all summer?
-                    What was it to the Dursleys if Harry went back to school
-                    without any of his homework done? The Dursleys were what
-                    wizards called Muggles (not a drop of magical blood in their
-                    veins).
-                  </p>
+                  <p>{item.description}</p>
                   <div className={styles.main_img_container}>
-                    <img
-                      src="https://code.edu.az/wp-content/uploads/2021/09/mezunlarimiz.jpeg"
-                      className={styles.main_img}
-                      alt=""
-                    />
+                    <img src={item.imgUrl} className={styles.main_img} alt="" />
                   </div>
                 </main>
                 <footer>
                   <div style={{ display: "flex" }}>
-                    <ThumbUpOffAltIcon />
+                    {
+                       <ThumbUpOffAltIcon style={{ color: item.likes.includes(user.id) ?'blue':'' }} />
+                    }
                     <span style={{ marginTop: "2px", marginLeft: "3px" }}>
-                      2
+                      {item.likes.length}
                     </span>
                   </div>
                 </footer>
