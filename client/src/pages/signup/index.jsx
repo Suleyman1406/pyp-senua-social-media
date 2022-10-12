@@ -231,22 +231,4 @@ const SignupPage = () => {
 
 export default SignupPage;
 
-const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
-function checkIfFilesAreCorrectType(file) {
-  if (file) {
-    if (!SUPPORTED_FORMATS.includes(file.type)) {
-      return false;
-    }
-  }
-  return true;
-}
 
-function checkIfFilesAreCorrectSize(file) {
-  if (file) {
-    const size = file.size / 1024 / 1024;
-    if (size > 10) {
-      return false;
-    }
-  }
-  return true;
-}

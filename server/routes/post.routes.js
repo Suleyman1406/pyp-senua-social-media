@@ -1,4 +1,4 @@
-const { authJwt } = require("../middlewares");
+const { authJwt, upload } = require("../middlewares");
 const controller = require("../controllers/post.controller");
 
 module.exports = function (app) {
@@ -12,7 +12,12 @@ module.exports = function (app) {
 
   app.get("/api/posts/all", [authJwt.verifyToken], controller.getPosts);
 
-  app.post("/api/posts/create", [authJwt.verifyToken], controller.createPost);
+  app.post(
+    "/api/posts/create",
+    [authJwt.verifyToken],
+    upload.single("uploaded_file"),
+    controller.createPost
+  );
 
   app.post(
     "/api/posts/toggle-like/:id",

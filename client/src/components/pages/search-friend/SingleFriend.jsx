@@ -7,8 +7,23 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useQuery } from 'react-query';
+import  axios  from 'axios';
 
 export default function SingleFriend() {
+  const user=JSON.parse(localStorage.getItem('user'))
+  const { isLoading, isError, data, error } = useQuery(
+    "users-posts",
+    async () => {
+      const { data } = await axios.get("http://localhost:8080/api/posts/all", {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      });
+      return data;
+    }
+  );
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
       <ListItem alignItems="flex-start">

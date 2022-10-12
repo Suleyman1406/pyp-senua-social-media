@@ -7,21 +7,16 @@ import { Avatar } from "@mui/material";
 
 const HomePage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  // const [controlLike, setControlLike] = useState(false)
-  const { isLoading, isError, data, error } = useQuery(
-    "users-posts",
-    async () => {
-      const { data } = await axios.get("http://localhost:8080/api/posts/all", {
-        headers: {
-          "x-access-token": user?.token,
-          "content-type": "application/json",
-        },
-      });
-      return data;
-    }
-  );
-  console.log(data);
-  console.log('USER', user);
+
+  const { isLoading, isError, data, error } = useQuery("posts", async () => {
+    const { data } = await axios.get("http://localhost:8080/api/posts/all", {
+      headers: {
+        "x-access-token": user?.token,
+        "content-type": "application/json",
+      },
+    });
+    return data;
+  });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -30,22 +25,16 @@ const HomePage = () => {
   if (isError) {
     return <div>{JSON.stringify(error)}</div>;
   }
-
-  // control user likes or not 
- 
-  // data.forEach(item => {
-  //   item.likes.forEach(element => {
-  //     if (element == user.id) {
-  //       console.log(true);
-  //       setControlLike(true)
-  //     }
-  //     else {
-  //       console.log(false);
-  //       setControlLike(true)
-  //     }
-  //   });
-  // })
-
+  function sendLike() {
+    console.log('likedd');
+    axios.post('http://localhost:8080/api/posts/toggle-like/634558d0b33024a29a2335ff',{} ,{
+      headers: {
+        "x-access-token": user?.token,
+        "content-type": "application/json",
+      },
+    })
+      .then(data => console.log('data', data.data.liked))
+  }
 
   return (
     <div className={styles.container}>
@@ -70,14 +59,20 @@ const HomePage = () => {
                 </header>
                 <main>
                   <p>{item.description}</p>
-                  <div className={styles.main_img_container}>
-                    <img src={item.imgUrl} className={styles.main_img} alt="" />
-                  </div>
+                  {item.imgUrl && (
+                    <div className={styles.main_img_container}>
+                      <img
+                        src="https://code.edu.az/wp-content/uploads/2021/09/mezunlarimiz.jpeg"
+                        className={styles.main_img}
+                        alt=""
+                      />
+                    </div>
+                  )}
                 </main>
                 <footer>
                   <div style={{ display: "flex" }}>
                     {
-                       <ThumbUpOffAltIcon style={{ color: item.likes.includes(user.id) ?'blue':'' }} />
+                      <ThumbUpOffAltIcon style={{ color: item.likes.includes(user.id) ? 'blue' : '' }} onClick={sendLike} />
                     }
                     <span style={{ marginTop: "2px", marginLeft: "3px" }}>
                       {item.likes.length}
