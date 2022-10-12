@@ -17,6 +17,7 @@ exports.getPosts = (_, res) => {
 
       res.status(200).send(
         result.map((post) => ({
+          id: post._id,
           description: post.description,
           createdOn: post.createdOn,
           imgUrl: post.imgUrl,
