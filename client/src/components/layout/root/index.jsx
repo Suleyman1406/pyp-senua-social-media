@@ -8,7 +8,6 @@ import Post from "../post";
 const Root = () => {
 
   const { show } = useContext(postModuleContext);
-  console.log(show)
 
   return (
     <AuthGuard>
