@@ -11,7 +11,16 @@ import RequestsModal from "components/pages/requests-modal/RequestsModal";
 const FriendsPage = () => {
   const [addModal, setAddModal]=useState(false)
   const [reqModal,setReqModal]=useState(false)
+
+
+  async function getData(){
+const res=await fetch('http://localhost:8080/api/auth/signup')
+const data=await res.json()
+console.log(data);
+  }
+  getData()
   return (
+
     <React.Fragment>
       <CssBaseline />
       <Container
