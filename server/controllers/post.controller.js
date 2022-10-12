@@ -49,12 +49,12 @@ exports.getPosts = (_, res) => {
 };
 
 exports.createPost = (req, res) => {
-  const { userId: currentUserId } = req;
-  const { description, imgUrl } = req.body;
+  const { userId: currentUserId, file } = req;
+  const { description } = req.body;
   const post = new Post({
     createdBy: currentUserId,
     description,
-    imgUrl,
+    imgUrl: file.path,
   });
   post.save((err) => {
     if (err) {
