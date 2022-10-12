@@ -8,18 +8,15 @@ import { Avatar } from "@mui/material";
 const HomePage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const { isLoading, isError, data, error } = useQuery(
-    "users-posts",
-    async () => {
-      const { data } = await axios.get("http://localhost:8080/api/posts/all", {
-        headers: {
-          "x-access-token": user?.token,
-          "content-type": "application/json",
-        },
-      });
-      return data;
-    }
-  );
+  const { isLoading, isError, data, error } = useQuery("posts", async () => {
+    const { data } = await axios.get("http://localhost:8080/api/posts/all", {
+      headers: {
+        "x-access-token": user?.token,
+        "content-type": "application/json",
+      },
+    });
+    return data;
+  });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -44,26 +41,21 @@ const HomePage = () => {
                     sx={{ width: 60, height: 60 }}
                   />
                   <div className={styles.user_info}>
-                    <h4>Name Surname</h4>
-                    <p>Username</p>
+                    <h4>{`${item.author?.name} ${item.author?.surname}`}</h4>
+                    <p>{item.author?.username}</p>
                   </div>
                 </header>
                 <main>
-                  <p>
-                    What did the Dursleys care if Harry lost his place on the
-                    House Quidditch team because he hadn’t practiced all summer?
-                    What was it to the Dursleys if Harry went back to school
-                    without any of his homework done? The Dursleys were what
-                    wizards called Muggles (not a drop of magical blood in their
-                    veins).
-                  </p>
-                  <div className={styles.main_img_container}>
-                    <img
-                      src="https://code.edu.az/wp-content/uploads/2021/09/mezunlarimiz.jpeg"
-                      className={styles.main_img}
-                      alt=""
-                    />
-                  </div>
+                  <p>{item.description}</p>
+                  {item.imgUrl && (
+                    <div className={styles.main_img_container}>
+                      <img
+                        src="https://code.edu.az/wp-content/uploads/2021/09/mezunlarimiz.jpeg"
+                        className={styles.main_img}
+                        alt=""
+                      />
+                    </div>
+                  )}
                 </main>
                 <footer>
                   <div style={{ display: "flex" }}>
