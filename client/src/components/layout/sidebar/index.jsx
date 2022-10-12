@@ -61,6 +61,7 @@ export default function Navigator(props) {
   const navigate = useNavigate();
 
   const { setShow } = useContext(postModuleContext);
+
   const signOut = useCallback(() => {
     axios.post("http://localhost:8080/api/auth/signout").then(() => {
       localStorage.removeItem("user");
@@ -87,7 +88,7 @@ export default function Navigator(props) {
               <p className={styles.name}>{currentUser?.username ?? "user"}</p>
             </ListItem>
             {children.map(({ id: childId, icon, active, to }) => (
-              <Link to={to} className={styles.route}>
+              <Link to={to} className={styles.route} key={childId}>
                 <ListItem disablePadding key={childId}>
                   <ListItemButton selected={active} sx={item}>
                     <ListItemIcon>{icon}</ListItemIcon>
@@ -102,7 +103,12 @@ export default function Navigator(props) {
                 </ListItem>
               </Link>
             ))}
-            <ColorButton sx={{ mx: 5, my: 5, px: 7 }} onClick={()=> setShow(true)}>Add Post</ColorButton>
+            <ColorButton
+              sx={{ mx: 5, my: 5, px: 7 }}
+              onClick={() => setShow(true)}
+            >
+              Add Post
+            </ColorButton>
           </Box>
         ))}
         <Button variant="text" onClick={signOut} sx={{ mx: 5, mt: 7, px: 6 }}>

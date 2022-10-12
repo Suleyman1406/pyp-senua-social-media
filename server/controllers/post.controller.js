@@ -16,45 +16,47 @@ exports.getPosts = (_, res) => {
       }
 
       res.status(200).send(
-        result.map((post) => ({
-          id: post._id,
-          description: post.description,
-          createdOn: post.createdOn,
-          imgUrl: post.imgUrl,
-          likes: post.likes,
-          author: {
-            id: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            )._id,
-            username: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).username,
-            surname: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).surname,
-            name: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).name,
-            email: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).email,
-            profilePhotoURL: users.find(
-              (user) => user._id.toString() === post.createdBy.toString()
-            ).profilePhotoURL,
-          },
-        }))
+        result
+          .map((post) => ({
+            id: post._id,
+            description: post.description,
+            createdOn: post.createdOn,
+            imgUrl: post.imgUrl,
+            likes: post.likes,
+            author: {
+              id: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              )._id,
+              username: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).username,
+              surname: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).surname,
+              name: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).name,
+              email: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).email,
+              profilePhotoURL: users.find(
+                (user) => user._id.toString() === post.createdBy.toString()
+              ).profilePhotoURL,
+            },
+          }))
+          .sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn))
       );
     });
   });
 };
 
 exports.createPost = (req, res) => {
-  const { userId: currentUserId } = req;
-  const { description, imgUrl } = req.body;
+  const { userId: currentUserId, file } = req;
+  const { description } = req.body;
   const post = new Post({
     createdBy: currentUserId,
     description,
-    imgUrl,
+    imgUrl: file.path,
   });
   post.save((err) => {
     if (err) {
@@ -80,6 +82,7 @@ exports.toggleLike = async (req, res) => {
       },
     }
   );
+
   if (result.nModified === 0) {
     await Post.updateOne(
       { _id: id },
@@ -89,8 +92,12 @@ exports.toggleLike = async (req, res) => {
         },
       }
     );
-    res.status(200).send({ message: "Post was unliked successfully!" });
+    res
+      .status(200)
+      .send({ liked: false, message: "Post was unliked successfully!" });
   } else {
-    res.status(200).send({ message: "Post was liked successfully!" });
+    res
+      .status(200)
+      .send({ liked: true, message: "Post was liked successfully!" });
   }
 };
