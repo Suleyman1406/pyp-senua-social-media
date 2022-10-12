@@ -7,7 +7,8 @@ import { Avatar } from "@mui/material";
 
 const HomePage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
+  const [checklike, setCheckLike] = useState(false)
+  const [count, setCount] = useState(0)
   const { isLoading, isError, data, error } = useQuery("posts", async () => {
     const { data } = await axios.get("http://localhost:8080/api/posts/all", {
       headers: {
@@ -25,15 +26,26 @@ const HomePage = () => {
   if (isError) {
     return <div>{JSON.stringify(error)}</div>;
   }
-  function sendLike() {
-    console.log('likedd');
-    axios.post('http://localhost:8080/api/posts/toggle-like/634558d0b33024a29a2335ff',{} ,{
+  function sendLike(id) {
+    console.log(user.id);
+    axios.post(`http://localhost:8080/api/posts/toggle-like/${id}`, { id }, {
       headers: {
         "x-access-token": user?.token,
         "content-type": "application/json",
       },
     })
-      .then(data => console.log('data', data.data.liked))
+      .then(data => {
+
+        setCheckLike(data.data.liked)
+
+        if (checklike == true) {
+          setCount(1)
+        }
+        else {
+          setCount(-1)
+        }
+      })
+
   }
 
   return (
@@ -72,10 +84,10 @@ const HomePage = () => {
                 <footer>
                   <div style={{ display: "flex" }}>
                     {
-                      <ThumbUpOffAltIcon style={{ color: item.likes.includes(user.id) ? 'blue' : '' }} onClick={sendLike} />
+                      <ThumbUpOffAltIcon style={{ color: item.likes.includes(user.id) && checklike ? 'blue' : '' }} onClick={() => sendLike(item.id)} />
                     }
                     <span style={{ marginTop: "2px", marginLeft: "3px" }}>
-                      {item.likes.length}
+                      {count}
                     </span>
                   </div>
                 </footer>
