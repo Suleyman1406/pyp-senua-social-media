@@ -31,7 +31,7 @@ const Profile = () => {
           <div>
             <h4 style={{ color: "blue" }}>4</h4>
             <h4>
-              <i>Friends</i>
+              Friends
             </h4>
           </div>
           <div>
@@ -46,13 +46,12 @@ const Profile = () => {
         initialValues={{
           name: "",
           surname: "",
-          image:""
         }}
         onSubmit={(values) => {
           console.log(values);
         }}
       >
-        {({ values, handleChange, handleBlur, handleSubmit }) => {
+        {({ values, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
           return (
             <div className={style.inputBox}>
               <Form onSubmit={handleSubmit}>
@@ -60,12 +59,13 @@ const Profile = () => {
                   {selectedImage && (
                     <div className={style.imgWrapper}>
                       <img
-                      className={style.image}
+                        className={style.image}
                         alt="nimage"
                         width={"250px"}
                         src={URL.createObjectURL(selectedImage)}
                       />
                     </div>
+                    
                   )}
                 </div>
                 <div className={style.input}>
@@ -110,14 +110,10 @@ const Profile = () => {
                     type="email"
                   />
                 </div>
-                <input
-                  type="file"
-                  name="image"
-                  onChange={(event) => {
-                    console.log(event.target.files[0].name);
-                    setSelectedImage(event.target.files[0]);
-                  }}
-                />
+                <input type="file" name="file" onChange={(event)=>{
+                  setSelectedImage(event.target.files[0])
+                  setFieldValue("file", event.target.files[0])
+                }}/>
                 <div className={style.button}>
                   <ColorButton type="submit">Save</ColorButton>
                 </div>
