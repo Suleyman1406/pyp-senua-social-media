@@ -1,0 +1,54 @@
+.background{
+    width: 100%;
+    background-image: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80');
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+}
+
+.imgWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.image{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: -90px;
+}
+
+.text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 100px;
+}
+
+.friend{
+    position: relative;
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    top: 100px;
+}
+
+.inputBox{
+    position: relative;
+    top: 120px;
+    left: 30px;
+    margin-bottom: 30px;
+}
+
+.input{
+    width: 400px;
+}
+
