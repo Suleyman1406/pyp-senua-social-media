@@ -1,5 +1,5 @@
-import React, { useContext, useCallback } from "react";
-import { postModuleContext } from "../../../context/postModuleContext";
+import React, {useContext, useCallback} from "react";
+import {postModuleContext} from '../../../context/postModuleContext'
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
