@@ -80,6 +80,7 @@ exports.toggleLike = async (req, res) => {
       },
     }
   );
+
   if (result.nModified === 0) {
     await Post.updateOne(
       { _id: id },
@@ -89,8 +90,12 @@ exports.toggleLike = async (req, res) => {
         },
       }
     );
-    res.status(200).send({ message: "Post was unliked successfully!" });
+    res
+      .status(200)
+      .send({ liked: false, message: "Post was unliked successfully!" });
   } else {
-    res.status(200).send({ message: "Post was liked successfully!" });
+    res
+      .status(200)
+      .send({ liked: true, message: "Post was liked successfully!" });
   }
 };
