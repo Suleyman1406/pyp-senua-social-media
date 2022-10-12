@@ -22,7 +22,7 @@
     border-radius: 50%;
     object-fit: cover;
     position: absolute;
-    top: -90px;
+    top: -310px;
 }
 
 .text{
@@ -38,6 +38,8 @@
     display: flex;
     text-align: center;
     justify-content: space-around;
+    width: 650px;
+    margin: auto;
     top: 100px;
 }
 
@@ -46,9 +48,17 @@
     top: 120px;
     left: 30px;
     margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
 }
 
 .input{
-    width: 400px;
+    width: 600px;
+    margin-bottom: 20px;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
 }
 
