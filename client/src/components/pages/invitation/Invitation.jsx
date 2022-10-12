@@ -7,408 +7,78 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useQuery } from 'react-query';
+import  axios  from 'axios';
 
 export default function Invitation() {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const { isLoading, isError, data, error } = useQuery(
+    "users-posts",
+    async () => {
+      const { data } = await axios.get("http://localhost:8080/api/requests/all", {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      });
+      return data;
+    }
+  );
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
+{
+  data?.map((item)=>{
+    return (
       <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Ulfat Zakirli"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Zakirli
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
-                
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'center'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
+      <ListItemAvatar>
+        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+      </ListItemAvatar>
+      <ListItemText
+        primary={item.author.name}
+        secondary={
+          <React.Fragment>
+            <Typography
+              sx={{ display: "inline" }}
+              component="span"
+              variant="body2"
+              color="text.primary"
+            >
+              {item.author.email}
+            </Typography>
+            <Typography
+              sx={{}}
+              component="span"
+              variant="body2"
+              color="text.primary"
+              style={{display:'flex',justifyContent:'flex-end'}}
+          
+            >
+            <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+              
+            </Typography>
+            <Typography
+              sx={{}}
+              component="span"
+              variant="body2"
+              color="text.primary"
+              style={{display:'flex',justifyContent:'center'}}
+          
+            >
+            <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
+              
+            </Typography>
+          </React.Fragment>
+        }
+      />
 
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Fatima Mirzezade"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @F_Mirzezade
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
-                
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'center'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Kamran Ekhberov"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Ekhberov_22
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
-                
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'center'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Efsane Sadiqova"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Efso23
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
-                
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'center'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Ulfat Zakirli"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Zakirli
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
-                
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'center'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Ulfat Zakirli"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Zakirli
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
-                
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'center'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Ulfat Zakirli"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Zakirli
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
-                
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'center'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Ulfat Zakirli"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Zakirli
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
-                
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'center'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
-      <Divider variant="inset" component="li"/>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Ulfat Zakirli"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                @Zakirli
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'flex-end'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
-                
-              </Typography>
-              <Typography
-                sx={{}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                style={{display:'flex',justifyContent:'center'}}
-            
-              >
-              <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
-                
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-      </ListItem>
+    </ListItem>
+    )
+  })
+}
+   
       <Divider variant="inset" component="li"/>
 
-      
       
 
 
