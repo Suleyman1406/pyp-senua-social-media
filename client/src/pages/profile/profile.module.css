@@ -62,3 +62,8 @@
     justify-content: center;
 }
 
+.file{
+    position: absolute;
+    top: -180px;
+    right: 300px;
+}
