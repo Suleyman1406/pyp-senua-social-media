@@ -2,12 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const dbConfig = require("./config/db.config");
-const http = require("http");
-const { Server } = require("socket.io");
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -60,16 +56,10 @@ require("./routes/auth.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/request.routes")(app);
 require("./routes/post.routes")(app);
+require("./routes/conversation.routes")(app);
+require("./routes/message.routes")(app);
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}.`);
-// });
-
-io.on("connection", (socket) => {
-  console.log("a user connected");
-});
-
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
