@@ -24,7 +24,10 @@ exports.getByUsername = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }
-
+    if (!user) {
+      res.status(404).send({ message: "User not found." });
+      return;
+    }
     res.status(200).send({
       id: user._id,
       username: user.username,
