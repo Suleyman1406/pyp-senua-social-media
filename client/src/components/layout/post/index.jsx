@@ -3,7 +3,7 @@ import { postModuleContext } from "../../../context/postModuleContext";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useQueryClient, useMutation } from "react-query";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {createPost, checkIfFilesAreCorrectSize, checkIfFilesAreCorrectType} from './utils'
 import {styles} from './postStyle.js'
 
@@ -23,7 +23,7 @@ function Index() {
     formik.setFieldValue("img", event.currentTarget.files[0]);
   };
 
-  const { mutate, isLoading } = useMutation(createPost, {
+  const { mutate } = useMutation(createPost, {
     onSuccess: async (data) => {
       queryClient.invalidateQueries("posts");
       toast.success(data.message);
@@ -102,7 +102,6 @@ function Index() {
           </Button>
         </div>
       </form>
-      <Toaster />
     </div>
   );
 }

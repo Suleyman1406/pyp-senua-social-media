@@ -10,6 +10,7 @@ import * as yup from "yup";
 import Error from "./errormessage";
 import { BsPencilFill } from "react-icons/bs";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is Required!"),
@@ -26,7 +27,7 @@ const Profile = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`http://localhost:8080/api/user/user2`, {
+      .get(`http://localhost:8080/api/user/${storageUser.username}`, {
         headers: {
           "x-access-token": storageUser?.token,
           "content-type": "application/json",
@@ -36,7 +37,7 @@ const Profile = () => {
         setUser(res.data);
         setIsLoading(false);
       });
-  }, []);
+  }, [storageUser?.token, storageUser.username]);
 
   if (isLoading) return <div>Loading...</div>;
   const ColorButton = styled(Button)(({ theme }) => ({
@@ -65,7 +66,7 @@ const Profile = () => {
         <div className={style.background}></div>
 
         <div className={style.text}>
-          <h3>{user?.name+" "+user?.surname}</h3>
+          <h3>{user?.name + " " + user?.surname}</h3>
         </div>
         <div className={style.friend}>
           <div>
@@ -83,12 +84,29 @@ const Profile = () => {
       <Formik
         validationSchema={validationSchema}
         initialValues={{
-          name: user?.name ?? "",
+          name: user?.name ?? null,
           surname: user?.surname ?? "",
-          file: null,
+          file: user?.profilePhotoURL ?? null,
         }}
         onSubmit={(values) => {
-          console.log(values);
+          console.log("values", values);
+          let formData = new FormData();
+          formData.append("name", values.name);
+          formData.append("surname", values.surname);
+          formData.append("uploaded_file", values.file);
+          axios
+            .post(`http://localhost:8080/api/user`, formData, {
+              headers: {
+                "x-access-token": storageUser?.token,
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "multipart/form-data",
+                Accept: "application/json",
+              },
+            })
+            .then((res) => {
+              toast.success(res.data.message);
+              console.log(res);
+            });
         }}
       >
         {({
@@ -102,7 +120,15 @@ const Profile = () => {
             <div className={style.inputBox}>
               <Form onSubmit={handleSubmit}>
                 <div className={style.imgWrapper}>
-                  {values.file && <Image file={values.file} />}
+                  {values.file ? (
+                    <Image file={values.file} />
+                  ) : (
+                    <img
+                      className={style.image}
+                      alt="avatar"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNL_ZnOTpXSvhf1UaK7beHey2BX42U6solRA&usqp=CAU"
+                    />
+                  )}
                   <div className={style.file}>
                     <InputButton
                       onClick={() => {
@@ -120,9 +146,9 @@ const Profile = () => {
                     label="Name"
                     name="name"
                     type="text"
-                    onChange={(e) => handleChange(e)}
+                    onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.name}
+                    value={values?.name}
                   />
                   <Error name="name" />
                 </div>
