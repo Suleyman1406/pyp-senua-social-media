@@ -8,6 +8,7 @@ import SingleUser from "components/pages/single-user/SingleUser";
 import AddModal from "components/pages/add-modal/AddModal";
 import RequestsModal from "components/pages/requests-modal/RequestsModal";
 
+
 const FriendsPage = () => {
   const [addModal, setAddModal]=useState(false)
   const [reqModal,setReqModal]=useState(false)
@@ -19,6 +20,8 @@ const data=await res.json()
 console.log(data);
   }
   getData()
+
+ 
   return (
 
     <React.Fragment>

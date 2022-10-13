@@ -28,6 +28,19 @@ export default function SingleUser() {
     }
   );
 
+  function UnFriend(item) {
+    const user = JSON.parse(localStorage.getItem("user"));
+console.log("user id", item);
+    axios
+      .delete(`http://localhost:8080/api/user/friends/${item.id}`, {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      })
+      .then((res) =>console.log(res))
+  }
+
 
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
@@ -69,7 +82,7 @@ export default function SingleUser() {
                     backgroundColor:  "#000" 
                   }}
                   variant="contained"
-                  onClick={() => setIsActive(!isActive)}
+                  onClick={() => UnFriend(item)}
                 >
                  Unfriend
                 </Button>
