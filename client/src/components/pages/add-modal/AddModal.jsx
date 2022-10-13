@@ -34,6 +34,18 @@ const AddModal = ({ setAddModal }) => {
       .then((res) => setFriend(res.data));
     console.log(friend);
   }
+  function addAsFriend() {
+    const user = JSON.parse(localStorage.getItem("user"));
+console.log(user.id);
+    axios
+      .post(`http://localhost:8080/api/requests/create/${user.id}`,{}, {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      })
+      .then((res) => console.log(res));
+  }
   return (
     <aside className="modal-container" onClick={() => setAddModal(false)}>
       <div
@@ -90,7 +102,7 @@ const AddModal = ({ setAddModal }) => {
                           fontSize: "13px",
                         }}
                         variant="contained"
-                        onClick={() => setIsActive(!isActive)}
+                        onClick={() =>addAsFriend()}
                       >
                         add as friend
                       </Button>
