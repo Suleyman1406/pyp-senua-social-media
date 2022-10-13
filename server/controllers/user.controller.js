@@ -32,7 +32,7 @@ exports.getByUsername = (req, res) => {
       name: user.name,
       email: user.email,
       friendsCount: user.friends.length,
-      profilePhotoURL: user.profilePhotoURL?.replace("public\\", "") ?? null,
+      profilePhotoURL: user.profilePhotoURL?.replace("public", "") ?? null,
     });
   });
 };
@@ -56,8 +56,7 @@ exports.getFriends = (req, res) => {
           surname: user.surname,
           name: user.name,
           email: user.email,
-          profilePhotoURL:
-            user.profilePhotoURL?.replace("public\\", "") ?? null,
+          profilePhotoURL: user.profilePhotoURL?.replace("public", "") ?? null,
         }))
       );
     });
