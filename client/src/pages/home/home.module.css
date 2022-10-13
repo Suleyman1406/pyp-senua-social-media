@@ -6,19 +6,28 @@
 .container{
   padding: 20px;
 }
+
 .cards {
   padding: 60px;
 }
+.titleDiv{
+  /* background-color: grey; */
+text-align: center;
+}
 h2{
-  margin:20px 0 0 250px;
+  margin:20px 0 0 0px;
+  font-family: cursive;
 }
 .card {
-  width: 60%;
+  width: 80%;
   padding: 40px;
   position: relative;
   margin: auto;
   margin-bottom: 80px;
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+.cardTablet{
+  /* background-color: black; */
 }
 .main_img_container {
   width: 100%;

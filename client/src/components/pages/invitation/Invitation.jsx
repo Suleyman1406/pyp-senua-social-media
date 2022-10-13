@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useQuery } from 'react-query';
 import  axios  from 'axios';
+import { useEffect,useState } from "react";
 
 export default function Invitation() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -21,29 +22,44 @@ export default function Invitation() {
           "content-type": "application/json",
         },
       });
-
-     
-
       return data;
     }
   );
 
-//   const acceptRequest=async ()=>{
-//     const { data } = await axios.get("http://localhost:8080/api/requests/confirm", {
-//     headers: {
-//       "x-access-token": user?.token,
-//       "content-type": "application/json",
-//     },
-//   }
-// }
 
-  console.log(data);
+  function AcceptReq(item) {
+    const user = JSON.parse(localStorage.getItem("user"));
+console.log("user id", item.id);
+    axios
+      .post(`http://localhost:8080/api/requests/confirm/${item.id}`,{}, {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      })
+      .then((res) =>console.log(res))
+  }
+    function IgnoreReq(item) {
+    const user = JSON.parse(localStorage.getItem("user"));
+console.log("user id", item.id);
+    axios
+      .post(`http://localhost:8080/api/requests/ignore/${item.id}`,{}, {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      })
+      .then((res) =>console.log(res))
+  }
+
+
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
 {
   data?.map((item)=>{
     return (
-      <ListItem alignItems="flex-start">
+      <>
+    <ListItem alignItems="flex-start">
       <ListItemAvatar>
         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
       </ListItemAvatar>
@@ -67,7 +83,7 @@ export default function Invitation() {
               style={{display:'flex',justifyContent:'flex-end'}}
           
             >
-            <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+            <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained" onClick={()=>AcceptReq(item)}>Accept</Button>
               
             </Typography>
             <Typography
@@ -78,7 +94,7 @@ export default function Invitation() {
               style={{display:'flex',justifyContent:'center'}}
           
             >
-            <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
+            <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined" onClick={()=>IgnoreReq(item)}>Ignore</Button>
               
             </Typography>
           </React.Fragment>
@@ -86,11 +102,12 @@ export default function Invitation() {
       />
 
     </ListItem>
+    <Divider variant="inset" component="li"/>
+      </>
     )
   })
 }
    
-      <Divider variant="inset" component="li"/>
 
       
 

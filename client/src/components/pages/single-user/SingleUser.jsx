@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useCallback } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -16,7 +15,7 @@ export default function SingleUser() {
   const [isActive, setIsActive] = useState(false)
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const { isLoading, isError, data, error } = useQuery(
+  const { data } = useQuery(
     "user-friends",
     async () => {
       const { data } = await axios.get("http://localhost:8080/api/user/friends/all", {
@@ -28,18 +27,19 @@ export default function SingleUser() {
       return data;
     }
   );
-  console.log(data);
+
 
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
       {
         data?.map((item)=>{
           return (
+            <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar
             alt="Remy Sharp"
-            src="https://avatars.githubusercontent.com/u/88549805?v=4"
+            src="https://avatars.githubusercontent.com/u/39061716?v=4"
           />
         </ListItemAvatar>
         <ListItemText
@@ -78,11 +78,14 @@ export default function SingleUser() {
           }
         />
       </ListItem>
+          <Divider variant="inset" component="li" />
+          </>
+
 
           )
+        
         })
       }
-      <Divider variant="inset" component="li" />
     </List>
   );
 }
