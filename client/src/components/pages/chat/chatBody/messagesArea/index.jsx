@@ -12,29 +12,72 @@ function Index() {
   return (
     <Container sx={{ px: 3, position: "relative" }}>
       <div style={{ height: "75vh", padding: "10px 0", overflowY: "auto" }}>
-        <Box
-          sx={{
-            mt: "20px",
-          }}
-        >
-          <img
-            src={DefPerson}
-            style={{ width: "40px", borderRadius: "50%", marginRight: "10px", display: "inline-block"}}
-          />
-          <p
-            style={{
-              display: "inline-block",
+        <div style={{marginTop: "20px",}}>
+          <Box
+            sx={{
+              m: 0,
               width: "300px",
-              wordWrap: "breakWord",
-              wordBreak: "break-word",
+              p: 2,
+              display: "flex",
+              alignItems: "top",
+              border: "1px solid rgb(0 0 0 / 10%)",
+              borderRadius: "10px",
             }}
           >
-            ksdufcbjsgfcsfbkabekusbrgfvaergfvakrfbjkaebfujreiwshdbaduavdudvwsauvduwvduavdua
-            ksdufcbjsgfcsfbkabekusbrgfvaergfvakrfbjkaebfujreiwshdbaduavdudvwsauvduwvduavdua
-            ksdufcbjsgfcsfbkabekusbrgfvaergfvakrfbjkaebfujreiwshdbaduavdudvwsauvduwvduavdua
-
-          </p>
-        </Box>
+            <img
+              src={DefPerson}
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                marginRight: "20px",
+              }}
+            />
+            <p
+              style={{
+                width: "300px",
+                wordWrap: "breakWord",
+                wordBreak: "break-word",
+              }}
+            >
+              ksdufcbjsgfcsfbkabekusbrgfvaergfvakrfbjkaebfujreiwshdbaduavdudvwsauvduwvduavdua
+              ksdufcbjsgfcsfbkabekusbrgfvaergfvakrfbjkaebfujreiwshdbaduavdudvwsauvduwvduavdua
+              ksdufcbjsgfcsfbkabekusbrgfvaergfvakrfbjkaebfujreiwshdbaduavdudvwsauvduwvduavdua
+            </p>
+          </Box>
+        </div>
+        <div div style={{marginTop: "20px", display: "flex", justifyContent: "end"}}>
+          <Box
+            sx={{
+              width: "300px",
+              p: 2,
+              display: "flex",
+              alignItems: "top",
+              border: "1px solid rgb(0 0 0 / 10%)",
+              borderRadius: "10px",
+              textAlign: "end",
+            }}
+          >
+            <p
+              style={{
+                width: "300px",
+                wordWrap: "breakWord",
+                wordBreak: "break-word",
+              }}
+            >
+              ksdufcbjsgfcsfbkabekusb
+            </p>
+            <img
+              src={DefPerson}
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                marginLeft: "20px",
+              }}
+            />
+          </Box>
+        </div>
       </div>
       <Paper
         component="form"
