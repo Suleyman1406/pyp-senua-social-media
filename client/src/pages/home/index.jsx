@@ -4,6 +4,8 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { Avatar } from "@mui/material";
+import DefPerson from "../../images/defPerson.jpg";
+
 
 const HomePage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -17,6 +19,8 @@ const HomePage = () => {
     });
     return data;
   });
+
+  console.log(data)
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -47,7 +51,7 @@ const HomePage = () => {
                 <header>
                   <Avatar
                     alt="Remy Sharp"
-                    src="https://media-exp1.licdn.com/dms/image/C5603AQEkiWewupNGQQ/profile-displayphoto-shrink_800_800/0/1538160028383?e=2147483647&v=beta&t=236vQLxb5dWdBLM-WMGKQmG_-_CErnk9iG18DIlYavk"
+                    src={item.author.profilePhotoURL ?? DefPerson}
                     sx={{ width: 60, height: 60 }}
                   />
                   <div className={styles.user_info}>
