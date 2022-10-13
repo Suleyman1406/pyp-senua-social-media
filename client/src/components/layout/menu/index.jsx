@@ -9,30 +9,34 @@ import MenuIcon from '@mui/icons-material/Menu';
 import styles from "./menu.module.css"
 import { useNavigate } from 'react-router-dom';
 export default function Menu() {
-  const navigate= useNavigate()
-  function showSidebar(){
-    console.log("loo");
+  const navigate = useNavigate()
+  function profile() {
+    navigate('/profile')
   }
-  function logOut(){
-   navigate('/login')
+  function addPost() {
+    navigate('/profile')
+  }
+  function friends() {
+    navigate('/friends')
+  }
+  function chat() {
+    navigate('/chat')
+  }
+  function logOut() {
+    navigate('/login')
   }
   return (
     <Box className={styles.box} sx={{ flexGrow: 1, }}>
       <AppBar position="static" >
-        <Toolbar style={{backgroundColor:'#00798C'}}>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2,  }}
-          >
-            <MenuIcon onClick={showSidebar}/>
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
+        <Toolbar style={{ backgroundColor: '#00798C' , display:"flex", justifyContent:"space-around"}}>
+          <Button color="inherit" onClick={profile}>Profile</Button>
+          <Button color="inherit" onClick={addPost}>Add Post</Button>
+
+          <Button color="inherit" onClick={friends}>Friends</Button>
+          <Button color="inherit" onClick={chat}>Chat</Button>
+
           <Button color="inherit" onClick={logOut}>Log out</Button>
+
         </Toolbar>
       </AppBar>
     </Box>
