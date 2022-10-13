@@ -5,10 +5,10 @@ import AuthGuard from "../auth-guard";
 import Sidebar from "../sidebar";
 import Menu from "../menu";
 import Post from "../post";
+import { Toaster } from "react-hot-toast";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import styles from "./root.module.css"
 const Root = () => {
-
   const { show } = useContext(postModuleContext);
   const matches = useMediaQuery('(min-width:900px)');
   return (
@@ -27,6 +27,7 @@ const Root = () => {
           <Outlet />
         </div>
       </div>
+      <Toaster />
     </AuthGuard>
   );
 };
