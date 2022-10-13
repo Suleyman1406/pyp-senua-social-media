@@ -15,7 +15,8 @@ const SUPPORTED_FORMATS = ["image/jpg","image/jpeg"]
 const validationSchema = yup.object({
   name: yup.string().required("Name is Required!"),
   surname: yup.string().required("Surname is Required!"),
-  // file: yup
+  file: yup
+  .mixed()
   // .test(
   //   "File_Size",
   //   "Uploaded file is too big",
@@ -92,6 +93,11 @@ const Profile = () => {
               <Form onSubmit={handleSubmit}>
                 <div className={style.imgWrapper}>
                   {values.file && <Image file={values.file} />}
+                  <div className={style.file}>
+                  <InputButton onClick={() => {
+                    fileRef.current.click()
+                  }}><BsPencilFill/></InputButton>
+                </div>
                 </div>
                 <div className={style.input}>
                   <TextField
@@ -137,14 +143,10 @@ const Profile = () => {
                     type="email"
                   />
                 </div>
-                <input  ref={fileRef} type="file" hidden name="file" onChange={(event) => {
+                <input accept="image/*"  ref={fileRef} type="file" hidden name="file" onChange={(event) => {
                   setFieldValue("file", event.target.files[0])
                 }} />
-                <div className={style.file}>
-                  <InputButton onClick={() => {
-                    fileRef.current.click()
-                  }}><BsPencilFill/></InputButton>
-                </div>
+                
                 <div className={style.button}>
                   <ColorButton type="submit">Save</ColorButton>
                 </div>
