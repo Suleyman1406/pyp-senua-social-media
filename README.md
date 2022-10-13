@@ -15,9 +15,15 @@ client directory
 ```
 cd client/
 ```
+
 server directory
 ```
 cd server/
+``` 
+
+socket directory
+```
+cd socket/
 ``` 
 
 Installation:
