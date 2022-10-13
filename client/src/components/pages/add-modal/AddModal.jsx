@@ -123,7 +123,7 @@ console.log("user id", user.id);
                       >
                      {
                         isActive? 
-                     "add as friend":'cancle'
+                     "add as friend":'cancel'
                      }  
                       </Button>
                     </Typography>
