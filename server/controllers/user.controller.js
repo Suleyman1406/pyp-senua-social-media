@@ -72,10 +72,12 @@ exports.deleteFromFriends = (req, res) => {
   User.updateOne(
     { _id: currentUserId },
     {
-      $unset: {
-        friends: {
-          _id: friendId,
-        },
+      $pullAll: {
+        friends: [
+          {
+            _id: friendId,
+          },
+        ],
       },
     },
     (err) => {
@@ -86,10 +88,12 @@ exports.deleteFromFriends = (req, res) => {
       User.updateOne(
         { _id: friendId },
         {
-          $unset: {
-            friends: {
-              _id: currentUserId,
-            },
+          $pullAll: {
+            friends: [
+              {
+                _id: currentUserId,
+              },
+            ],
           },
         },
         (err) => {
