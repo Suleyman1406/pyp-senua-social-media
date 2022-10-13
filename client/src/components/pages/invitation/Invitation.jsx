@@ -9,8 +9,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useQuery } from 'react-query';
 import  axios  from 'axios';
+import { useEffect,useState } from "react";
 
 export default function Invitation() {
+  const [ignore,setIgnore]=useState([])
   const user = JSON.parse(localStorage.getItem("user"));
   const { isLoading, isError, data, error } = useQuery(
     "user-requests",
@@ -21,29 +23,29 @@ export default function Invitation() {
           "content-type": "application/json",
         },
       });
-
-     
-
       return data;
     }
   );
-
-//   const acceptRequest=async ()=>{
-//     const { data } = await axios.get("http://localhost:8080/api/requests/confirm", {
-//     headers: {
-//       "x-access-token": user?.token,
-//       "content-type": "application/json",
-//     },
-//   }
-// }
-
   console.log(data);
+
+    const ignoreRequest=async()=>{
+      const { data } = await axios.post(`http://localhost:8080/api/requests/confirm`, {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      });
+      return data;
+    }
+
+
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
 {
   data?.map((item)=>{
     return (
-      <ListItem alignItems="flex-start">
+      <>
+    <ListItem alignItems="flex-start">
       <ListItemAvatar>
         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
       </ListItemAvatar>
@@ -86,11 +88,12 @@ export default function Invitation() {
       />
 
     </ListItem>
+    <Divider variant="inset" component="li"/>
+      </>
     )
   })
 }
    
-      <Divider variant="inset" component="li"/>
 
       
 
