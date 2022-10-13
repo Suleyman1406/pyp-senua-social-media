@@ -81,7 +81,7 @@ exports.signin = (req, res) => {
         name: user.name,
         surname: user.surname,
         email: user.email,
-        profilePhotoURL: user.profilePhotoURL?.replace("public\\", "") ?? null,
+        profilePhotoURL: user.profilePhotoURL?.replace("public", "") ?? null,
         roles: authorities,
         token,
       });
