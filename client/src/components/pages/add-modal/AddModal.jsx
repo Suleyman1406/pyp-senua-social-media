@@ -1,36 +1,47 @@
-import React from 'react'
-import './addModal.css'
-import { TextField } from '@mui/material';
-import { useState } from 'react';
-import List from '../search-friend/List';
-import axios from 'axios';
-import { Avatar } from '@mui/material';
+import React from "react";
+import "./addModal.css";
+import { TextField } from "@mui/material";
+import { useState } from "react";
+import List from "../search-friend/List";
+import axios from "axios";
+import { Avatar } from "@mui/material";
+import SingleUser from "../single-user/SingleUser";
+import { ListItem } from "@mui/material";
+import { ListItemAvatar } from "@mui/material";
+import { ListItemText } from "@mui/material";
+import { Typography } from "@mui/material";
+import { Button } from "@mui/material";
 const AddModal = ({ setAddModal }) => {
+  const [inputText, setInputText] = useState("");
+  const [isActive, setIsActive] = useState(false);
 
-  const [inputText, setInputText] = useState("")
-  const [user, setUser] = useState([])
+  const [friend, setFriend] = useState({});
   let inputHandler = (e) => {
-    let lowerCase = e.target.value.toLowerCase()
-    setInputText(lowerCase)
-  }
+    let lowerCase = e.target.value.toLowerCase();
+    setInputText(lowerCase);
+  };
 
   function searchUser() {
-
     const user = JSON.parse(localStorage.getItem("user"));
 
-
-    axios.get(`http://localhost:8080/api/user/${inputText}`, {
-      headers: {
-        "x-access-token": user?.token,
-        "content-type": "application/json",
-      },
-    })
-      .then(data => setUser(data))
-    console.log('searched', user);
+    axios
+      .get(`http://localhost:8080/api/user/${inputText}`, {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      })
+      .then((res) => setFriend(res.data));
+    console.log(friend);
   }
   return (
     <aside className="modal-container" onClick={() => setAddModal(false)}>
-      <div className="modal" onClick={(e) => { e.stopPropagation() }} >
+      <div
+        className="modal"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <h4>Search friends</h4>
         <br />
         <div className="main">
@@ -41,43 +52,76 @@ const AddModal = ({ setAddModal }) => {
               variant="outlined"
               fullWidth
               label="Search"
-              name='value'
-
+              name="value"
             />
           </div>
-          {/* 
-          <List  /> */}
-          <ul>
-            {
-              <li>
-                <header>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={user.profilePhotoURL ?? ''}
-                    sx={{ width: 60, height: 60 }}
-                  />
-                  <div className='user_info'>
-                    <h4>
 
-                    </h4>
-                    <p></p>
-                  </div>
-                </header>
-              </li>
-            }
-          </ul>
+          {friend.username && (
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar
+                  alt="Remy Sharp"
+                  src="https://avatars.githubusercontent.com/u/39061716?v=4"
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={friend.username}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: "inline" }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {friend.email}
+                    </Typography>
+                    <Typography
+                      sx={{}}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                      style={{ display: "flex", justifyContent: "flex-end" }}
+                    >
+                      <Button
+                        size="small"
+                        style={{
+                          marginTop: "-30px",
+                          fontSize: "13px",
+                        }}
+                        variant="contained"
+                        onClick={() => setIsActive(!isActive)}
+                      >
+                        add as friend
+                      </Button>
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          )}
         </div>
         <div className="btn-container">
-          <button type="button" className="btn clear-btn" style={{ marginTop: '2rem' }} onClick={searchUser} >
+          <button
+            type="button"
+            className="btn clear-btn"
+            style={{ marginTop: "2rem" }}
+            onClick={searchUser}
+          >
             search
           </button>
-          <button type="button" className="btn clear-btn" style={{ marginTop: '2rem' }} onClick={() => setAddModal(false)}>
+          <button
+            type="button"
+            className="btn clear-btn"
+            style={{ marginTop: "2rem" }}
+            onClick={() => setAddModal(false)}
+          >
             close
           </button>
         </div>
       </div>
     </aside>
   );
-}
+};
 
-export default AddModal
+export default AddModal;
