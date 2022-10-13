@@ -1,19 +1,53 @@
 import { Button, Divider, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import style from "./profile.module.css";
 import { styled } from "@mui/material/styles";
 import { blue } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import { Form, Formik } from "formik";
+import Image from "./image";
+import * as yup from "yup";
+import Error from "./errormessage";
+import { BsPencilFill } from "react-icons/bs";
+
+const SUPPORTED_FORMATS = ["image/jpg","image/jpeg"]
+
+const validationSchema = yup.object({
+  name: yup.string().required("Name is Required!"),
+  surname: yup.string().required("Surname is Required!"),
+  file: yup
+  .mixed()
+  // .test(
+  //   "File_Size",
+  //   "Uploaded file is too big",
+  //   (value)=> !value || (value && value.size <= 1024*1024)
+  // )
+  // .test(
+  //   "File_Format",
+  //   "Uploaded file has unsupported format",
+  //   (value)=> !value || (value && SUPPORTED_FORMATS.includes(value?.type))
+  // ),
+});
+
 
 const Profile = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const fileRef = useRef(null)
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(blue[500]),
     backgroundColor: "#00798C",
     marginLeft: 10,
     borderRadius: 10,
+    "&:hover": {
+      backgroundColor: blue[900],
+    },
+  }));
+
+  const InputButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(blue[500]),
+    backgroundColor: "#00798C",
+    borderRadius: '50%',
+    minWidth:0,
     "&:hover": {
       backgroundColor: blue[900],
     },
@@ -43,9 +77,11 @@ const Profile = () => {
         <Divider style={{ position: "relative", top: 100 }} />
       </div>
       <Formik
+      validationSchema={validationSchema}
         initialValues={{
           name: "",
           surname: "",
+          file: null
         }}
         onSubmit={(values) => {
           console.log(values);
@@ -56,17 +92,12 @@ const Profile = () => {
             <div className={style.inputBox}>
               <Form onSubmit={handleSubmit}>
                 <div className={style.imgWrapper}>
-                  {selectedImage && (
-                    <div className={style.imgWrapper}>
-                      <img
-                        className={style.image}
-                        alt="nimage"
-                        width={"250px"}
-                        src={URL.createObjectURL(selectedImage)}
-                      />
-                    </div>
-                    
-                  )}
+                  {values.file && <Image file={values.file} />}
+                  <div className={style.file}>
+                  <InputButton onClick={() => {
+                    fileRef.current.click()
+                  }}><BsPencilFill/></InputButton>
+                </div>
                 </div>
                 <div className={style.input}>
                   <TextField
@@ -79,6 +110,7 @@ const Profile = () => {
                     onBlur={handleBlur}
                     value={values.name}
                   />
+                  <Error name="name"/>
                 </div>
                 <div className={style.input}>
                   <TextField
@@ -91,6 +123,7 @@ const Profile = () => {
                     onBlur={handleBlur}
                     value={values.surname}
                   />
+                  <Error name="surname"/>
                 </div>
                 <div className={style.input}>
                   <TextField
@@ -110,10 +143,10 @@ const Profile = () => {
                     type="email"
                   />
                 </div>
-                <input type="file" name="file" onChange={(event)=>{
-                  setSelectedImage(event.target.files[0])
+                <input accept="image/*"  ref={fileRef} type="file" hidden name="file" onChange={(event) => {
                   setFieldValue("file", event.target.files[0])
-                }}/>
+                }} />
+                
                 <div className={style.button}>
                   <ColorButton type="submit">Save</ColorButton>
                 </div>
