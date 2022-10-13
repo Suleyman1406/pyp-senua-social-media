@@ -21,7 +21,7 @@ exports.getPosts = (_, res) => {
             id: post._id,
             description: post.description,
             createdOn: post.createdOn,
-            imgUrl: post.imgUrl,
+            imgUrl: post.imgUrl?.replace("public", "") ?? null,
             likes: post.likes,
             author: {
               id: users.find(
@@ -39,9 +39,12 @@ exports.getPosts = (_, res) => {
               email: users.find(
                 (user) => user._id.toString() === post.createdBy.toString()
               ).email,
-              profilePhotoURL: users.find(
-                (user) => user._id.toString() === post.createdBy.toString()
-              ).profilePhotoURL,
+              profilePhotoURL:
+                users
+                  .find(
+                    (user) => user._id.toString() === post.createdBy.toString()
+                  )
+                  .profilePhotoURL?.replace("public", "") ?? null,
             },
           }))
           .sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn))
