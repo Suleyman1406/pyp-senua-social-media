@@ -13,7 +13,7 @@ import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
 const AddModal = ({ setAddModal }) => {
   const [inputText, setInputText] = useState("");
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
   const [friend, setFriend] = useState({});
   let inputHandler = (e) => {
@@ -45,6 +45,18 @@ console.log("user id", user.id);
         },
       })
       .then((res) => console.log(res));
+  }
+
+  function cancleReq(){
+    const user=JSON.parse(localStorage.getItem("user"));
+    axios.post(`http://localhost:8080/api/requests/cancel/${friend.id}`, {}, {
+      headers: {
+        "x-access-token": user?.token,
+        "content-type": "application/json",
+      },
+    })
+    .then((res) => console.log(res));
+
   }
   return (
     <aside className="modal-container" onClick={() => setAddModal(false)}>
@@ -100,11 +112,19 @@ console.log("user id", user.id);
                         style={{
                           marginTop: "-30px",
                           fontSize: "13px",
+                          backgroundColor:isActive ? '':'#be2625'
                         }}
                         variant="contained"
-                        onClick={() =>addAsFriend()}
+                        onClick={() =>{
+                         isActive? addAsFriend(): cancleReq()
+                          setIsActive(!isActive)
+                        }
+                      }
                       >
-                        add as friend
+                     {
+                        isActive? 
+                     "add as friend":'cancle'
+                     }  
                       </Button>
                     </Typography>
                   </React.Fragment>
