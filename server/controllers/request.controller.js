@@ -21,8 +21,7 @@ exports.getRequests = (req, res) => {
           username: user.username,
           fullname: user.fullname,
           email: user.email,
-          profilePhotoURL:
-            user.profilePhotoURL?.replace("public\\", "") ?? null,
+          profilePhotoURL: user.profilePhotoURL?.replace("public", "") ?? null,
         }))
       );
     });
