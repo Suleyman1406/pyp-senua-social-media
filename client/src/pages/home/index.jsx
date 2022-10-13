@@ -9,7 +9,7 @@ import DefPerson from "../../images/defPerson.jpg";
 
 const HomePage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
+  const [checklike, setCheckLike] = useState(false)
   const { isLoading, isError, data, error } = useQuery("posts", async () => {
     const { data } = await axios.get("http://localhost:8080/api/posts/all", {
       headers: {
@@ -29,15 +29,27 @@ const HomePage = () => {
   if (isError) {
     return <div>{JSON.stringify(error)}</div>;
   }
-  function sendLike() {
-    console.log('likedd');
-    axios.post('http://localhost:8080/api/posts/toggle-like/634558d0b33024a29a2335ff',{} ,{
+  function sendLike(item, idx) {
+    console.log(item);
+    axios.post(`http://localhost:8080/api/posts/toggle-like/${item.id}`, {}, {
       headers: {
         "x-access-token": user?.token,
         "content-type": "application/json",
       },
     })
-      .then(data => console.log('data', data.data.liked))
+      .then(res => {
+        setCheckLike(res.data.liked)
+
+        if (!res.data.liked) {
+          let i = data[idx].likes.indexOf(user.id)
+          data[idx].likes.splice(i, 1);
+        }
+
+        else {
+          data[idx].likes.push(user.id)
+        }
+      })
+
   }
 
   return (
@@ -45,7 +57,7 @@ const HomePage = () => {
       <h2>Posts</h2>
       <div className={styles.cards}>
         {data &&
-          data.map((item, id) => {
+          data.map((item, idx) => {
             return (
               <div className={styles.card} key={item.id}>
                 <header>
@@ -76,9 +88,12 @@ const HomePage = () => {
                 <footer>
                   <div style={{ display: "flex" }}>
                     {
-                      <ThumbUpOffAltIcon style={{ color: item.likes.includes(user.id) ? 'blue' : '' }} onClick={sendLike} />
+                      <ThumbUpOffAltIcon onClick={() => sendLike(item, idx)} style={{ color: item.likes.includes(user.id) ? 'blue' : '' }} />
                     }
                     <span style={{ marginTop: "2px", marginLeft: "3px" }}>
+
+                      {checklike}
+
                       {item.likes.length}
                     </span>
                   </div>
