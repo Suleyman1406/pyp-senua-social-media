@@ -1,5 +1,3 @@
-
-
 :root {
     --clr-primary: #645cff;
     --clr-primary-dark: #282566;
@@ -22,6 +20,18 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+  header {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  .user_info {
+    font-family: "Gotham Pro";
+    vertical-align: middle;
+    margin: 10px 0 0 15px;
+  }
+
 
   a {
     text-decoration: none;

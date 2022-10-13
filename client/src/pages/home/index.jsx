@@ -5,9 +5,11 @@ import { useQuery } from "react-query";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { Avatar } from "@mui/material";
 import DefPerson from "../../images/defPerson.jpg";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 const HomePage = () => {
+  const matches = useMediaQuery('(min-width:900px)');
   const user = JSON.parse(localStorage.getItem("user"));
   const [checklike, setCheckLike] = useState(false)
   const { isLoading, isError, data, error } = useQuery("posts", async () => {
@@ -19,6 +21,7 @@ const HomePage = () => {
     });
     return data;
   });
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -52,8 +55,10 @@ const HomePage = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Posts</h2>
-      <div className={styles.cards}>
+      <div className={styles.titleDiv}>   
+           <h2>Posts</h2>
+      </div>
+      <div className={matches ? styles.card : styles.cardTablet}>
         {data &&
           data.map((item, idx) => {
             return (
@@ -86,7 +91,7 @@ const HomePage = () => {
                 <footer>
                   <div style={{ display: "flex" }}>
                     {
-                      <ThumbUpOffAltIcon onClick={() => sendLike(item, idx)} style={{ color: item.likes.includes(user.id) ? 'blue' : '' }} />
+                      <ThumbUpOffAltIcon onClick={() => sendLike(item, idx)} style={{ cursor: 'pointer', color: item.likes.includes(user.id) ? '#fb8500' : '' }} />
                     }
                     <span style={{ marginTop: "2px", marginLeft: "3px" }}>
 
