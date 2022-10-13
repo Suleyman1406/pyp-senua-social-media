@@ -81,7 +81,7 @@ const HomePage = () => {
                   {item.imgUrl && (
                     <div className={styles.main_img_container}>
                       <img
-                        src="https://code.edu.az/wp-content/uploads/2021/09/mezunlarimiz.jpeg"
+                        src={`http://localhost:8080/${item.imgUrl}`}
                         className={styles.main_img}
                         alt=""
                       />
