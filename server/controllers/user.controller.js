@@ -24,13 +24,15 @@ exports.getByUsername = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }
+
     res.status(200).send({
       id: user._id,
       username: user.username,
       surname: user.surname,
       name: user.name,
       email: user.email,
-      profilePhotoURL: user.profilePhotoURL,
+      friendsCount: user.friends.length,
+      profilePhotoURL: user.profilePhotoURL || null,
     });
   });
 };
