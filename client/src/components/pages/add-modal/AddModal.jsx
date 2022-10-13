@@ -47,7 +47,7 @@ console.log("user id", user.id);
       .then((res) => console.log(res));
   }
 
-  function cancleReq(){
+  function cancelReq(){
     const user=JSON.parse(localStorage.getItem("user"));
     axios.post(`http://localhost:8080/api/requests/cancel/${friend.id}`, {}, {
       headers: {
@@ -116,7 +116,7 @@ console.log("user id", user.id);
                         }}
                         variant="contained"
                         onClick={() =>{
-                         isActive? addAsFriend(): cancleReq()
+                         isActive? addAsFriend(): cancelReq()
                           setIsActive(!isActive)
                         }
                       }

@@ -12,6 +12,13 @@ import  axios  from 'axios';
 import { useEffect,useState } from "react";
 
 export default function Invitation() {
+  const [count,setCount]=useState(false)
+
+  useEffect(()=>{
+
+  },[count])
+
+
   const user = JSON.parse(localStorage.getItem("user"));
   const { isLoading, isError, data, error } = useQuery(
     "user-requests",
@@ -23,10 +30,10 @@ export default function Invitation() {
         },
       });
       return data;
+
+ 
     }
   );
-
-
   function AcceptReq(item) {
     const user = JSON.parse(localStorage.getItem("user"));
 console.log("user id", item.id);
@@ -39,18 +46,22 @@ console.log("user id", item.id);
       })
       .then((res) =>console.log(res))
   }
+
+
     function IgnoreReq(item) {
     const user = JSON.parse(localStorage.getItem("user"));
 console.log("user id", item.id);
-    axios
-      .post(`http://localhost:8080/api/requests/ignore/${item.id}`,{}, {
-        headers: {
-          "x-access-token": user?.token,
-          "content-type": "application/json",
-        },
-      })
-      .then((res) =>console.log(res))
-  }
+  axios.post(`http://localhost:8080/api/requests/ignore/${item.id}`,{}, {
+    headers: {
+      "x-access-token": user?.token,
+      "content-type": "application/json",
+    },
+  })
+  .then((res) =>console.log(res))
+  setCount(!count)
+}
+
+
 
 
   return (

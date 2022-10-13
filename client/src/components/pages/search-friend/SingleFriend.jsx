@@ -9,8 +9,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useQuery } from 'react-query';
 import  axios  from 'axios';
+import {useState} from "react"
 
 export default function SingleFriend() {
+  const [count,setCount]=useState(0)
+
   const user=JSON.parse(localStorage.getItem('user'))
   const { isLoading, isError, data, error } = useQuery(
     "users-posts",
@@ -20,9 +23,11 @@ export default function SingleFriend() {
           "x-access-token": user?.token,
           "content-type": "application/json",
         },
+      
       });
       return data;
     }
+ 
   );
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
