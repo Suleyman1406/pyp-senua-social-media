@@ -10,16 +10,14 @@ function Index() {
   return (
     <Container
       sx={{
-        position: 'fixed',
         borderBottom: "1px solid rgb(0 0 0 / 10%)",
         p: 3,
-        width: "100%",
         display: "flex",
         alignItems: "center",
       }}
     >
-      <img src={DefPerson} style={{ width: "70px", borderRadius: "50%" }} />
-      <span style={{ fontSize: "35px", marginLeft: "30px" }}>username</span>
+      <img src={DefPerson} style={{ width: "50px", borderRadius: "50%" }} />
+      <span style={{ fontSize: "20px", marginLeft: "30px" }}>username</span>
       <div style={{ width: "100%", textAlign: 'end' }}>
         <IconButton aria-label="delete" >
           <DeleteIcon />
