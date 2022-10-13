@@ -28,18 +28,19 @@ export default function SingleUser() {
       return data;
     }
   );
-  console.log(data);
+
 
   return (
     <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
       {
         data?.map((item)=>{
           return (
+            <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar
             alt="Remy Sharp"
-            src="https://avatars.githubusercontent.com/u/88549805?v=4"
+            src="https://avatars.githubusercontent.com/u/39061716?v=4"
           />
         </ListItemAvatar>
         <ListItemText
@@ -78,11 +79,14 @@ export default function SingleUser() {
           }
         />
       </ListItem>
+          <Divider variant="inset" component="li" />
+          </>
+
 
           )
+        
         })
       }
-      <Divider variant="inset" component="li" />
     </List>
   );
 }
