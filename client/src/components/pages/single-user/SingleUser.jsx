@@ -15,7 +15,7 @@ export default function SingleUser() {
   const [isActive, setIsActive] = useState(false)
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const { isLoading, isError, data, error } = useQuery(
+  const { data } = useQuery(
     "user-friends",
     async () => {
       const { data } = await axios.get("http://localhost:8080/api/user/friends/all", {
