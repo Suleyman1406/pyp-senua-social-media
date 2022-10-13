@@ -2,8 +2,15 @@ const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const dbConfig = require("./config/db.config");
+const http = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 
@@ -45,7 +52,7 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to sen application." });
+  res.json({ message: "Welcome to senua application." });
 });
 
 // routes
@@ -54,9 +61,15 @@ require("./routes/user.routes")(app);
 require("./routes/request.routes")(app);
 require("./routes/post.routes")(app);
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}.`);
+// });
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
+});
+
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
