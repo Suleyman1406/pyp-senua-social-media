@@ -29,6 +29,7 @@ export default function SingleFriend() {
       {
         data?.map((item)=>{
           return(
+            <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="https://avatars.githubusercontent.com/u/88549805?v=4" />
@@ -62,11 +63,11 @@ export default function SingleFriend() {
         />
 
       </ListItem>
-
+      <Divider variant="inset" component="li"/>
+            </>
           )
         })
       }
-      <Divider variant="inset" component="li"/>
 
    
       
