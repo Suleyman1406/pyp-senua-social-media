@@ -32,13 +32,13 @@ const AddModal = ({ setAddModal }) => {
         },
       })
       .then((res) => setFriend(res.data));
-    console.log(friend);
+    console.log(friend.id);
   }
   function addAsFriend() {
     const user = JSON.parse(localStorage.getItem("user"));
-console.log(user.id);
+console.log("user id", user.id);
     axios
-      .post(`http://localhost:8080/api/requests/create/${user.id}`,{}, {
+      .post(`http://localhost:8080/api/requests/create/${friend.id}`,{}, {
         headers: {
           "x-access-token": user?.token,
           "content-type": "application/json",

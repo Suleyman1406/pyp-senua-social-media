@@ -12,7 +12,6 @@ import  axios  from 'axios';
 import { useEffect,useState } from "react";
 
 export default function Invitation() {
-  const [ignore,setIgnore]=useState([])
   const user = JSON.parse(localStorage.getItem("user"));
   const { isLoading, isError, data, error } = useQuery(
     "user-requests",
@@ -26,17 +25,32 @@ export default function Invitation() {
       return data;
     }
   );
-  console.log(data);
 
-    const ignoreRequest=async()=>{
-      const { data } = await axios.post(`http://localhost:8080/api/requests/confirm`, {
+
+  function AcceptReq(item) {
+    const user = JSON.parse(localStorage.getItem("user"));
+console.log("user id", item.id);
+    axios
+      .post(`http://localhost:8080/api/requests/confirm/${item.id}`,{}, {
         headers: {
           "x-access-token": user?.token,
           "content-type": "application/json",
         },
-      });
-      return data;
-    }
+      })
+      .then((res) =>console.log(res))
+  }
+    function IgnoreReq(item) {
+    const user = JSON.parse(localStorage.getItem("user"));
+console.log("user id", item.id);
+    axios
+      .post(`http://localhost:8080/api/requests/ignore/${item.id}`,{}, {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      })
+      .then((res) =>console.log(res))
+  }
 
 
   return (
@@ -69,7 +83,7 @@ export default function Invitation() {
               style={{display:'flex',justifyContent:'flex-end'}}
           
             >
-            <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained">Accept</Button>
+            <Button size="small" style={{marginTop:'-30px',fontSize:'13px', textTransform:'capitalize'}} variant="contained" onClick={()=>AcceptReq(item)}>Accept</Button>
               
             </Typography>
             <Typography
@@ -80,7 +94,7 @@ export default function Invitation() {
               style={{display:'flex',justifyContent:'center'}}
           
             >
-            <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined">Ignore</Button>
+            <Button size="small" style={{marginTop:'-31px',fontSize:'13px', marginRight:'-8rem', textTransform:'capitalize'}} variant="outlined" onClick={()=>IgnoreReq(item)}>Ignore</Button>
               
             </Typography>
           </React.Fragment>
