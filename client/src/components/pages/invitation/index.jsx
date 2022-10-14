@@ -18,21 +18,18 @@ export default function Invitation() {
   const queryClient = useQueryClient();
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const { isLoading, isError, data, refetch } = useQuery(
-    "user-requests",
-    async () => {
-      const { data } = await axios.get(
-        process.env.REACT_APP_SERVER_BASE_URL + "/api/requests/all",
-        {
-          headers: {
-            "x-access-token": user?.token,
-            "content-type": "application/json",
-          },
-        }
-      );
-      return data;
-    }
-  );
+  const { isLoading, data, refetch } = useQuery("user-requests", async () => {
+    const { data } = await axios.get(
+      process.env.REACT_APP_SERVER_BASE_URL + "/api/requests/all",
+      {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      }
+    );
+    return data;
+  });
   if (isLoading)
     return (
       <ThreeDots
@@ -162,6 +159,20 @@ export default function Invitation() {
           </>
         );
       })}
+
+      {(!data || data.length === 0) && (
+        <p
+          style={{
+            marginTop: "30px",
+            textAlign: "center",
+            fontSize: "1.5rem",
+            fontWeight: "600",
+            color: "gray",
+          }}
+        >
+          You don't have any request
+        </p>
+      )}
     </List>
   );
 }

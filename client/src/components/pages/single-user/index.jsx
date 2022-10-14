@@ -6,6 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Typography from "@mui/material/Typography";
 import { ThreeDots } from "react-loader-spinner";
+import DefPerson from "images/defPerson.jpg";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { useQuery } from "react-query";
@@ -47,6 +48,8 @@ export default function SingleUser() {
     );
 
   function unfriend(item) {
+    if (!window.confirm(`Are you sure delete ${item.name} from friends`))
+      return;
     const user = JSON.parse(localStorage.getItem("user"));
     axios
       .delete(
@@ -67,15 +70,26 @@ export default function SingleUser() {
   }
 
   return (
-    <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
+    <List
+      sx={{
+        width: "100%",
+        maxWidth: 500,
+        bgcolor: "background.paper",
+      }}
+    >
       {data?.map((item, idx) => {
+        console.log(item);
         return (
           <React.Fragment key={idx}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 <Avatar
                   alt="Remy Sharp"
-                  src="https://avatars.githubusercontent.com/u/39061716?v=4"
+                  src={
+                    item?.profilePhotoURL
+                      ? `${process.env.REACT_APP_SERVER_BASE_URL}/${item?.profilePhotoURL}`
+                      : DefPerson
+                  }
                 />
               </ListItemAvatar>
               <ListItemText
@@ -91,7 +105,6 @@ export default function SingleUser() {
                       {item.email}
                     </Typography>
                     <Typography
-                      sx={{}}
                       component="span"
                       variant="body2"
                       color="text.primary"
@@ -118,6 +131,19 @@ export default function SingleUser() {
           </React.Fragment>
         );
       })}
+      {(!data || data.length === 0) && (
+        <p
+          style={{
+            marginTop: "30px",
+            textAlign: "center",
+            fontSize: "1.5rem",
+            fontWeight: "600",
+            color: "gray",
+          }}
+        >
+          You don't have any friend :(
+        </p>
+      )}
     </List>
   );
 }
