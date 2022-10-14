@@ -8,14 +8,14 @@ import Grid from "@mui/material/Grid";
 
 const ChatPage = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
-  const socket = useRef(io("ws://localhost:8900"))
+  const socket = useRef(io("https://pyp-senua-socket.herokuapp.com", { transports: ["websocket"] }))
   const [currentChat, setCurrentChat] = useState()
 
   useEffect(()=> {
     socket?.current?.emit("addUser", currentUser.id)
-    socket?.current.on("getUsers", users => {
-      console.log("users",users)
-    })
+    // socket?.current.on("getUsers", users => {
+    //   console.log("users",users)
+    // })
   }, [currentUser])
 
   return (

@@ -77,7 +77,6 @@ const LoginPage = () => {
     }),
     onSubmit: (values) => {
       mutate(values);
-      console.log(queryClient.getQueryData("user"));
     },
   });
   return (

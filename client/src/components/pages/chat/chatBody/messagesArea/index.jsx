@@ -96,7 +96,6 @@ function Index({ currentChat, socket }) {
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
-  console.log(messages);
 
   return (
     <Container sx={{ px: 3, position: "relative" }}>
@@ -107,7 +106,7 @@ function Index({ currentChat, socket }) {
               marginTop: "25px",
               display: "flex",
               justifyContent: `${
-                message.sender !== currentUser.id ? "start" : "end"
+                message.sender != currentUser.id ? "start" : "end"
               }`,
             }}
             ref={scrollRef}
@@ -125,9 +124,17 @@ function Index({ currentChat, socket }) {
               }}
             >
               <img
-                src={DefPerson}
+                src={currentChat.members[1]?._id === message.sender
+                  ? currentChat.members[1].profilePhotoURL
+                    ? process.env.REACT_APP_SERVER_BASE_URL +
+                      currentChat.members[1].profilePhotoURL
+                    : DefPerson
+                  : currentChat.members[0].profilePhotoURL
+                  ? process.env.REACT_APP_SERVER_BASE_URL +
+                    currentChat.members[0].profilePhotoURL
+                  : DefPerson}
                 style={{
-                  width: "40px",
+                  width: "60px",
                   height: "40px",
                   borderRadius: "50%",
                   marginRight: message.sender === currentUser.id ? "0" : "20px",
