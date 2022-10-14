@@ -33,7 +33,16 @@ exports.getConversation = async (req, res) => {
         "_id, name , username , surname , email , profilePhotoURL"
       )
       .exec();
-    res.status(200).json(conversations);
+
+    res.status(200).json(
+      conversations.map((c) => ({
+        ...c._doc,
+        members: c.members.map((m) => ({
+          ...m._doc,
+          profilePhotoURL: m.profilePhotoURL?.replace("public", "") ?? null,
+        })),
+      }))
+    );
   } catch (err) {
     res.status(500).json(err);
   }
