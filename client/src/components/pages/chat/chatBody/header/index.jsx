@@ -6,7 +6,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import DefPerson from "../../../../../images/defPerson.jpg";
 
-function Index() {
+function Index({ currentChat }) {
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   return (
     <Container
       sx={{
@@ -16,10 +18,25 @@ function Index() {
         alignItems: "center",
       }}
     >
-      <img src={DefPerson} style={{ width: "50px", borderRadius: "50%" }} />
-      <span style={{ fontSize: "20px", marginLeft: "30px" }}>username</span>
-      <div style={{ width: "100%", textAlign: 'end' }}>
-        <IconButton aria-label="delete" >
+      <img
+        src={
+          currentChat.members[1]?.id === currentUser.id
+            ? currentChat.members[1].profilePhotoURL
+              ? process.env.REACT_APP_SERVER_BASE_URL +
+                currentChat.members[1].profilePhotoURL
+              : DefPerson
+            : currentChat.members[0].profilePhotoURL
+            ? process.env.REACT_APP_SERVER_BASE_URL +
+              currentChat.members[0].profilePhotoURL
+            : DefPerson
+        }
+        style={{ width: "50px", borderRadius: "50%" }}
+      />
+      <span style={{ fontSize: "20px", marginLeft: "30px" }}>
+      {currentChat.members[0]?.id === currentUser.id ? currentChat.members[0].username : currentChat.members[1].username}
+      </span>
+      <div style={{ width: "100%", textAlign: "end" }}>
+        <IconButton aria-label="delete">
           <DeleteIcon />
         </IconButton>
       </div>

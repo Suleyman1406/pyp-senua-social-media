@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {io} from 'socket.io-client'
 
 import ChatBody from "../../components/pages/chat/chatBody";
@@ -7,28 +7,27 @@ import Chats from "../../components/pages/chat/chats";
 import Grid from "@mui/material/Grid";
 
 const ChatPage = () => {
-  const [socket, setSocket] = useState(null)
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const socket = useRef(io("ws://localhost:8900"))
+  const [currentChat, setCurrentChat] = useState()
 
   useEffect(()=> {
-    console.log("object")
-    setSocket(io("ws://localhost:8900"))
-  }, [])
-
-  useEffect(()=> {
-    socket?.on("welcome", message=> {
-      console.log(message)
+    socket?.current?.emit("addUser", currentUser.id)
+    socket?.current.on("getUsers", users => {
+      console.log("users",users)
     })
-  }, [socket])
-
-
+  }, [currentUser])
 
   return (
     <Grid container>
       <Grid item xs={4}>
-        <Chats />
+        <Chats setCurrentChat={setCurrentChat}/>
       </Grid>
       <Grid item xs={8}>
-        <ChatBody />
+        {
+          currentChat ? <ChatBody currentChat={currentChat} socket={socket}/> : null
+        }
+        
       </Grid>
     </Grid>
   );

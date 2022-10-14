@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import DefPerson from "../../../../images/defPerson.jpg";
 
-function Index() {
+function Index({setCurrentChat}) {
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const [conversations, setConversations] = useState();
@@ -23,23 +23,6 @@ function Index() {
         },
       })
       .then((res) => setConversations(res.data));
-
-    // axios
-    //   .post(
-    //     "http://localhost:8080/api/conversations",
-    //     {
-    //       receiverId: "634458e8f6b347791ee2b1d4",
-    //     },
-    //     {
-    //       headers: {
-    //         "x-access-token": currentUser?.token,
-    //         "Access-Control-Allow-Origin": "*",
-    //         "Content-Type": "multipart/form-data",
-    //         Accept: "application/json",
-    //       },
-    //     }
-    //   )
-    //   .then((res) => console.log(res));
   }, []);
 
   return (
@@ -89,12 +72,19 @@ function Index() {
             width: 300,
             cursor: "pointer",
             border: "1px solid rgb(0 0 0 / 10%)",
-            borderRadius: "30px",
           }}
+          onClick={()=> setCurrentChat(conv)}
         >
-          <img src={process.env.REACT_APP_SERVER_BASE_URL+conv.members[0]?.id === currentUser.id ? (conv.members[1].profilePhotoURL ?? DefPerson) : (conv.members[0].profilePhotoURL && DefPerson)} 
+          {console.log(conversations)}
+          <img src={
+            
+            conv.members[1]._id === currentUser.id 
+            ? (conv.members[1].profilePhotoURL ? (process.env.REACT_APP_SERVER_BASE_URL+conv.members[1].profilePhotoURL) : DefPerson) 
+            : (conv.members[0].profilePhotoURL ? (process.env.REACT_APP_SERVER_BASE_URL+conv.members[0].profilePhotoURL) : DefPerson)} 
           style={{ width: "50px", borderRadius: "50%" }} />
-          <span style={{ fontSize: "20px", marginLeft: "20px" }} >{conv.members[0]?.id === currentUser.id ? conv.members[1].username : conv.members[0].username}</span>
+          <span style={{ fontSize: "20px", marginLeft: "20px" }} >
+            {conv.members[0]._id === currentUser.id ? conv.members[1].username : conv.members[0].username}
+          </span>
         </Paper>
       ))}
     </Container>
