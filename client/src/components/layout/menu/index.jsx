@@ -9,30 +9,35 @@ import MenuIcon from '@mui/icons-material/Menu';
 import styles from "./menu.module.css"
 import { useNavigate } from 'react-router-dom';
 export default function Menu() {
-  const navigate= useNavigate()
-  function showSidebar(){
-    console.log("loo");
+  const navigate = useNavigate()
+
+  function goLogout() {
+    navigate('/login')
   }
-  function logOut(){
-   navigate('/login')
+  function goProfile() {
+    navigate('/profile')
+  }
+  function goFriends() {
+    navigate('/friends')
+  }
+  function goChat() {
+    navigate('/chat')
+  }
+  function goLogout() {
+    navigate('/login')
+  }
+  function goHome() {
+    navigate('/')
   }
   return (
-    <Box className={styles.box} sx={{ flexGrow: 1, }}>
-      <AppBar position="static" >
-        <Toolbar style={{backgroundColor:'#00798C'}}>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2,  }}
-          >
-            <MenuIcon onClick={showSidebar}/>
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit" onClick={logOut}>Log out</Button>
+    <Box className={styles.box} sx={{ flexGrow: 1 }}>
+      <AppBar position="static" style={{ justifyContent: "space-around" }} >
+        <Toolbar style={{ backgroundColor: '#00798C', justifyContent: "space-around" }}>
+          <Button color="inherit" onClick={goHome}>Home</Button>
+          <Button color="inherit" onClick={goProfile}>Profile</Button>
+          <Button color="inherit" onClick={goFriends}>Friends</Button>
+          <Button color="inherit" onClick={goChat}>Chat</Button>
+          <Button color="inherit" onClick={goLogout}>Log out</Button>
         </Toolbar>
       </AppBar>
     </Box>

@@ -57,7 +57,10 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function Navigator(props) {
   const queryClient = useQueryClient();
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const currentUser = queryClient.getQueryData("user");
+  const storageUser = JSON.parse(localStorage.getItem("user"));
+
+  console.log('currentuser', storageUser);
   const navigate = useNavigate();
 
   const { setShow } = useContext(postModuleContext);
@@ -90,7 +93,7 @@ export default function Navigator(props) {
                 className={styles.image}
                 alt=""
               />
-              <p className={styles.name}>{currentUser?.username ?? "user"}</p>
+              <p className={styles.name}>{storageUser?.username ?? "user"}</p>
             </ListItem>
             {children.map(({ id: childId, icon, active, to }) => (
               <Link to={to} className={styles.route} key={childId}>
