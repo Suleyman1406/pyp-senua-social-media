@@ -3,6 +3,7 @@ const Message = db.message;
 
 exports.createMessage = async (req, res) => {
   const { userId: sender } = req;
+  console.log(req.body)
   const { conversationId, text } = req.body;
   const newMessage = new Message({
     conversationId,
