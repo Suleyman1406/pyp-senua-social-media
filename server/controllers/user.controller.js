@@ -8,12 +8,21 @@ exports.updateUser = (req, res) => {
   if (name) data.name = name;
   if (surname) data.surname = surname;
   if (file) data.profilePhotoURL = file.path;
-  User.updateOne({ _id: currentUserId }, data, (err) => {
+  User.findOneAndUpdate({ _id: currentUserId }, data, (err, doc) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
-    res.status(200).send({ message: "Successfully updated" });
+    res.status(200).send({
+      doc: {
+        ...doc,
+        ...data,
+        profilePhotoURL: file
+          ? data.profilePhotoURL?.replace("public", "")
+          : doc.profilePhotoURL?.replace("public", ""),
+      },
+      message: "Successfully updated",
+    });
   });
 };
 

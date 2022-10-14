@@ -1,5 +1,5 @@
-import React, {useContext, useCallback} from "react";
-import {postModuleContext} from '../../../context/postModuleContext'
+import React, { useContext, useCallback } from "react";
+import { postModuleContext } from "../../../context/postModuleContext";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
@@ -57,7 +57,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function Navigator(props) {
   const queryClient = useQueryClient();
-  const currentUser = queryClient.getQueryData("user");
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
   const { setShow } = useContext(postModuleContext);
@@ -81,7 +81,10 @@ export default function Navigator(props) {
               style={{ display: "block", textAlign: "center" }}
             >
               <img
-                src={currentUser?.profilePhotoURL ?? DefPerson}
+                src={
+                  `http://localhost:8080/${currentUser?.profilePhotoURL}` ??
+                  DefPerson
+                }
                 className={styles.image}
                 alt=""
               />
