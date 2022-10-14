@@ -84,7 +84,11 @@ const HomePage = () => {
                 <header>
                   <Avatar
                     alt="Remy Sharp"
-                    src={item.author.profilePhotoURL ?? DefPerson}
+                    src={
+                      item.author.profilePhotoURL
+                        ? `${process.env.REACT_APP_SERVER_BASE_URL}${item.author.profilePhotoURL}`
+                        : DefPerson
+                    }
                     sx={{ width: 60, height: 60 }}
                   />
                   <div className={styles.user_info}>
