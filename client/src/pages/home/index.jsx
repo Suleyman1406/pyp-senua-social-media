@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { Avatar } from "@mui/material";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import React from "react";
+import { useQuery, useQueryClient } from "react-query";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import DefPerson from "images/defPerson.jpg";
+import { Avatar } from "@mui/material";
 import styles from "./home.module.css";
 import axios from "axios";
 
 const HomePage = () => {
   const matches = useMediaQuery("(min-width:900px)");
   const user = JSON.parse(localStorage.getItem("user"));
-  const [checklike, setCheckLike] = useState(false);
+  const queryClient = useQueryClient();
   const { isLoading, isError, data, error } = useQuery("posts", async () => {
     const { data } = await axios.get(
       process.env.REACT_APP_SERVER_BASE_URL + "/api/posts/all",
@@ -44,14 +44,13 @@ const HomePage = () => {
         }
       )
       .then((res) => {
-        setCheckLike(res.data.liked);
-
         if (!res.data.liked) {
           let i = data[idx].likes.indexOf(user.id);
           data[idx].likes.splice(i, 1);
         } else {
           data[idx].likes.push(user.id);
         }
+        queryClient.setQueryData("posts", [...data]);
       });
   }
 
@@ -102,8 +101,6 @@ const HomePage = () => {
                       />
                     }
                     <span style={{ marginTop: "2px", marginLeft: "3px" }}>
-                      {checklike}
-
                       {item.likes.length}
                     </span>
                   </div>
