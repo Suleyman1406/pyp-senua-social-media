@@ -2,9 +2,11 @@ import React from "react";
 import { useQuery, useQueryClient } from "react-query";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import { ThreeDots } from "react-loader-spinner";
 import DefPerson from "images/defPerson.jpg";
 import { Avatar } from "@mui/material";
 import styles from "./home.module.css";
+
 import axios from "axios";
 
 const HomePage = () => {
@@ -25,7 +27,22 @@ const HomePage = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <ThreeDots
+        height="100"
+        width="100"
+        radius="9"
+        color="rgb(187,37,37)"
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{
+          justifyContent: "center",
+          height: "80vh",
+          alignItems: "center",
+        }}
+        wrapperClassName=""
+        visible={true}
+      />
+    );
   }
 
   if (isError) {

@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
-import Invitation from "../invitation/Invitation";
+import React from "react";
+import Invitation from "../invitation";
 import "./requestsModal.css";
 const RequestsModal = ({ setReqModal }) => {
-
-
   return (
     <aside className="modal-container" onClick={() => setReqModal(false)}>
       <div
@@ -15,7 +13,6 @@ const RequestsModal = ({ setReqModal }) => {
         <h4>Invitations</h4>
         <Invitation />
         <div className="btn-container">
-       
           <button
             type="button"
             className="btn clear-btn"
