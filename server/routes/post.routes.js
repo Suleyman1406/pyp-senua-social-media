@@ -24,4 +24,10 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.toggleLike
   );
+
+  app.delete(
+    "/api/posts/all",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.deleteAllPosts
+  );
 };

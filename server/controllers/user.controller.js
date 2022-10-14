@@ -26,6 +26,16 @@ exports.updateUser = (req, res) => {
   });
 };
 
+exports.getAllUsers = (req, res) => {
+  User.find({}, (err, doc) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.status(200).send(doc);
+  });
+};
+
 exports.getByUsername = (req, res) => {
   const { username } = req.params;
   User.findOne({ username }, (err, user) => {

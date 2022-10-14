@@ -18,6 +18,12 @@ module.exports = function (app) {
   );
 
   app.get(
+    "/api/user/all",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.getAllUsers
+  );
+
+  app.get(
     "/api/user/:username",
     [authJwt.verifyToken],
     controller.getByUsername
