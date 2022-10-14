@@ -59,7 +59,6 @@ const Profile = () => {
       backgroundColor: blue[900],
     },
   }));
-  console.log(user);
   return (
     <>
       <div>
@@ -89,7 +88,6 @@ const Profile = () => {
           file: user?.profilePhotoURL ?? null,
         }}
         onSubmit={(values) => {
-          console.log("values", values);
           let formData = new FormData();
           formData.append("name", values.name);
           formData.append("surname", values.surname);
@@ -105,7 +103,10 @@ const Profile = () => {
             })
             .then((res) => {
               toast.success(res.data.message);
-              console.log(res);
+              localStorage.setItem(
+                "user",
+                JSON.stringify({ ...storageUser, ...res.data.doc })
+              );
             });
         }}
       >
