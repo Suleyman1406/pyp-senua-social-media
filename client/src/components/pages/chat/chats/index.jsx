@@ -16,7 +16,7 @@ function Index() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/conversations", {
+      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/conversations`, {
         headers: {
           "x-access-token": currentUser?.token,
           "Content-Type": "multipart/form-data",
@@ -92,7 +92,8 @@ function Index() {
             borderRadius: "30px",
           }}
         >
-          <img src={"http://localhost:8080/"+conv.members[0]?.id === currentUser.id ? (conv.members[1].profilePhotoURL ?? DefPerson) : (conv.members[0].profilePhotoURL && DefPerson)} style={{ width: "50px", borderRadius: "50%" }} />
+          <img src={process.env.REACT_APP_SERVER_BASE_URL+conv.members[0]?.id === currentUser.id ? (conv.members[1].profilePhotoURL ?? DefPerson) : (conv.members[0].profilePhotoURL && DefPerson)} 
+          style={{ width: "50px", borderRadius: "50%" }} />
           <span style={{ fontSize: "20px", marginLeft: "20px" }} >{conv.members[0]?.id === currentUser.id ? conv.members[1].username : conv.members[0].username}</span>
         </Paper>
       ))}

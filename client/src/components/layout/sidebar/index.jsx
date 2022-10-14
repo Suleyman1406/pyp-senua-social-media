@@ -60,7 +60,7 @@ export default function Navigator(props) {
   const currentUser = queryClient.getQueryData("user");
   const storageUser = JSON.parse(localStorage.getItem("user"));
 
-  console.log('currentuser', storageUser);
+  console.log("currentuser", storageUser);
   const navigate = useNavigate();
 
   const { setShow } = useContext(postModuleContext);
@@ -87,8 +87,9 @@ export default function Navigator(props) {
             >
               <img
                 src={
-                  `${process.env.REACT_APP_SERVER_BASE_URL}/${currentUser?.profilePhotoURL}` ??
-                  DefPerson
+                  currentUser?.profilePhotoURL
+                    ? `${process.env.REACT_APP_SERVER_BASE_URL}/${currentUser?.profilePhotoURL}`
+                    : DefPerson
                 }
                 className={styles.image}
                 alt=""
