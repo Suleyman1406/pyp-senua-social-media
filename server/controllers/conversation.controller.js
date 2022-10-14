@@ -6,7 +6,7 @@ exports.createConversation = async (req, res) => {
 
   try {
     const conversation = await Conversation.findOne({
-      members: { $in: [currentUserId, req.body.receiverId] },
+      members: { $all: [currentUserId, req.body.receiverId] },
     });
     if (conversation) {
       res.status(200).json(conversation);
@@ -25,10 +25,15 @@ exports.createConversation = async (req, res) => {
 exports.getConversation = async (req, res) => {
   const { userId: currentUserId } = req;
   try {
-    const conversation = await Conversation.find({
+    const conversations = await Conversation.find({
       members: { $in: [currentUserId] },
-    });
-    res.status(200).json(conversation);
+    })
+      .populate(
+        "members",
+        "_id, name , username , surname , email , profilePhotoURL"
+      )
+      .exec();
+    res.status(200).json(conversations);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -38,7 +43,13 @@ exports.getConversationByTwoUserId = async (req, res) => {
   try {
     const conversation = await Conversation.findOne({
       members: { $all: [req.params.firstUserId, req.params.secondUserId] },
-    });
+    })
+
+      .populate(
+        "members",
+        "_id, name , username , surname , email , profilePhotoURL"
+      )
+      .exec();
     res.status(200).json(conversation);
   } catch (err) {
     res.status(500).json(err);
