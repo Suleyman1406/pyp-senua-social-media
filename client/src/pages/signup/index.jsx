@@ -69,7 +69,7 @@ const SignupPage = () => {
         )
         .then((res) => {
           setLoading(false);
-          if (res.status == 200) {
+          if (res.status === 200) {
             toast.success(res.data.message);
             setTimeout(() => {
               navigate("/login");
