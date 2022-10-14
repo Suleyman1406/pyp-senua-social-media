@@ -1,5 +1,10 @@
+import AdminRoot from "components/layout/admin-root";
 import Root from "components/layout/root";
+import Dashboard from "pages/admin/dashboard";
+import Posts from "pages/admin/posts";
+import Users from "pages/admin/users";
 import ChatPage from "pages/chat";
+import ForgotPassword from "pages/forgot-password";
 import FriendsPage from "pages/friends";
 import HomePage from "pages/home";
 import LoginPage from "pages/login";
@@ -16,7 +21,6 @@ export const router = createBrowserRouter([
         path: "",
         element: <HomePage />,
       },
-      
       {
         path: "friends",
         element: <FriendsPage />,
@@ -32,11 +36,33 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    path: "/admin",
+    element: <AdminRoot />,
+    children: [
+      {
+        path: "",
+        element: <Dashboard />,
+      },
+      {
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "posts",
+        element: <Posts />,
+      },
+    ],
+  },
+  {
     path: "/login",
     element: <LoginPage />,
   },
   {
     path: "/signup",
     element: <SignUpPage />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
   },
 ]);

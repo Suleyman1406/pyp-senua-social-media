@@ -60,7 +60,6 @@ export default function Navigator(props) {
   const currentUser = queryClient.getQueryData("user");
   const storageUser = JSON.parse(localStorage.getItem("user"));
 
-  console.log("currentuser", storageUser);
   const navigate = useNavigate();
 
   const { setShow } = useContext(postModuleContext);

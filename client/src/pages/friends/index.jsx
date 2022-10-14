@@ -1,25 +1,15 @@
 import React, { useState } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import SingleUser from "components/pages/single-user/SingleUser";
-import AddModal from "components/pages/add-modal/AddModal";
-import RequestsModal from "components/pages/requests-modal/RequestsModal";
+import SingleUser from "components/pages/single-user";
+import AddModal from "components/pages/add-modal";
+import RequestsModal from "components/pages/requests-modal";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
 
 const FriendsPage = () => {
   const [addModal, setAddModal] = useState(false);
   const [reqModal, setReqModal] = useState(false);
-
-  async function getData() {
-    const res = await fetch(
-      process.env.REACT_APP_SERVER_BASE_URL + "/api/auth/signup"
-    );
-    const data = await res.json();
-    console.log(data);
-  }
-  getData();
 
   return (
     <React.Fragment>

@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import styles from "./home.module.css";
-import axios from "axios";
-import { useQuery } from "react-query";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import { Avatar } from "@mui/material";
-import DefPerson from "../../images/defPerson.jpg";
+import React from "react";
+import { useQuery, useQueryClient } from "react-query";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import { ThreeDots } from "react-loader-spinner";
+import DefPerson from "images/defPerson.jpg";
+import { Avatar } from "@mui/material";
+import styles from "./home.module.css";
+
+import axios from "axios";
 
 const HomePage = () => {
   const matches = useMediaQuery("(min-width:900px)");
   const user = JSON.parse(localStorage.getItem("user"));
-  const [checklike, setCheckLike] = useState(false);
+  const queryClient = useQueryClient();
   const { isLoading, isError, data, error } = useQuery("posts", async () => {
     const { data } = await axios.get(
       process.env.REACT_APP_SERVER_BASE_URL + "/api/posts/all",
@@ -25,14 +27,28 @@ const HomePage = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <ThreeDots
+        height="100"
+        width="100"
+        radius="9"
+        color="rgb(187,37,37)"
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{
+          justifyContent: "center",
+          height: "80vh",
+          alignItems: "center",
+        }}
+        wrapperClassName=""
+        visible={true}
+      />
+    );
   }
 
   if (isError) {
-    return <div>{JSON.stringify(error)}</div>;
+    return <div>{JSON.stringify(error.message)}</div>;
   }
   function sendLike(item, idx) {
-    console.log(item);
     axios
       .post(
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/posts/toggle-like/${item.id}`,
@@ -45,14 +61,13 @@ const HomePage = () => {
         }
       )
       .then((res) => {
-        setCheckLike(res.data.liked);
-
         if (!res.data.liked) {
           let i = data[idx].likes.indexOf(user.id);
           data[idx].likes.splice(i, 1);
         } else {
           data[idx].likes.push(user.id);
         }
+        queryClient.setQueryData("posts", [...data]);
       });
   }
 
@@ -69,7 +84,11 @@ const HomePage = () => {
                 <header>
                   <Avatar
                     alt="Remy Sharp"
-                    src={item.author.profilePhotoURL ?? DefPerson}
+                    src={
+                      item.author.profilePhotoURL
+                        ? `${process.env.REACT_APP_SERVER_BASE_URL}${item.author.profilePhotoURL}`
+                        : DefPerson
+                    }
                     sx={{ width: 60, height: 60 }}
                   />
                   <div className={styles.user_info}>
@@ -103,8 +122,6 @@ const HomePage = () => {
                       />
                     }
                     <span style={{ marginTop: "2px", marginLeft: "3px" }}>
-                      {checklike}
-
                       {item.likes.length}
                     </span>
                   </div>

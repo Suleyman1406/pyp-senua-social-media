@@ -20,10 +20,8 @@ export function checkIfFilesAreCorrectSize(file) {
   return true;
 }
 
-const currentUser = JSON.parse(localStorage.getItem("user"));
-
 export const createPost = async (data) => {
-  console.log(data);
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   const { data: response } = await axios.post(
     process.env.REACT_APP_SERVER_BASE_URL + "/api/posts/create",
     data,

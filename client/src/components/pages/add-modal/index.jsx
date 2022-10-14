@@ -2,19 +2,19 @@ import React from "react";
 import "./addModal.css";
 import { TextField } from "@mui/material";
 import { useState } from "react";
-import List from "../search-friend/List";
 import axios from "axios";
 import { Avatar } from "@mui/material";
-import SingleUser from "../single-user/SingleUser";
 import { ListItem } from "@mui/material";
 import { ListItemAvatar } from "@mui/material";
 import { ListItemText } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
+import toast from "react-hot-toast";
+
 const AddModal = ({ setAddModal }) => {
   const [inputText, setInputText] = useState("");
   const [isActive, setIsActive] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   const [friend, setFriend] = useState({});
   let inputHandler = (e) => {
     let lowerCase = e.target.value.toLowerCase();
@@ -22,6 +22,8 @@ const AddModal = ({ setAddModal }) => {
   };
 
   function searchUser() {
+    setIsActive(true);
+    setLoading(true);
     const user = JSON.parse(localStorage.getItem("user"));
 
     axios
@@ -31,12 +33,19 @@ const AddModal = ({ setAddModal }) => {
           "content-type": "application/json",
         },
       })
-      .then((res) => setFriend(res.data));
-    console.log(friend.id);
+      .then((res) => {
+        setLoading(false);
+        setFriend(res.data);
+      })
+      .catch(({ response }) => {
+        setFriend({});
+        setLoading(false);
+        toast.error(response.data.message);
+      });
   }
+
   function addAsFriend() {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("user id", user.id);
     axios
       .post(
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/requests/create/${friend.id}`,
@@ -48,7 +57,17 @@ const AddModal = ({ setAddModal }) => {
           },
         }
       )
-      .then((res) => console.log(res));
+      .then((res) => {
+        if (res.status === 200) {
+          setIsActive(!isActive);
+          toast.success(res.data.message);
+        } else {
+          toast.error(res.data.message);
+        }
+      })
+      .catch(({ response }) => {
+        toast.error(response.data.message);
+      });
   }
 
   function cancelReq() {
@@ -64,7 +83,15 @@ const AddModal = ({ setAddModal }) => {
           },
         }
       )
-      .then((res) => console.log(res));
+      .then((res) => {
+        if (res.status === 200) {
+          setIsActive(!isActive);
+          toast.success(res.data.message);
+        }
+      })
+      .catch(({ response }) => {
+        toast.error(response.data.message);
+      });
   }
   return (
     <aside className="modal-container" onClick={() => setAddModal(false)}>
@@ -87,7 +114,6 @@ const AddModal = ({ setAddModal }) => {
               name="value"
             />
           </div>
-
           {friend.username && (
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
@@ -125,7 +151,6 @@ const AddModal = ({ setAddModal }) => {
                         variant="contained"
                         onClick={() => {
                           isActive ? addAsFriend() : cancelReq();
-                          setIsActive(!isActive);
                         }}
                       >
                         {isActive ? "add as friend" : "cancel"}
@@ -143,6 +168,7 @@ const AddModal = ({ setAddModal }) => {
             className="btn clear-btn"
             style={{ marginTop: "2rem" }}
             onClick={searchUser}
+            disabled={loading}
           >
             search
           </button>
