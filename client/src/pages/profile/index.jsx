@@ -27,12 +27,15 @@ const Profile = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`http://localhost:8080/api/user/${storageUser.username}`, {
-        headers: {
-          "x-access-token": storageUser?.token,
-          "content-type": "application/json",
-        },
-      })
+      .get(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/user/${storageUser.username}`,
+        {
+          headers: {
+            "x-access-token": storageUser?.token,
+            "content-type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         setUser(res.data);
         setIsLoading(false);
@@ -59,7 +62,6 @@ const Profile = () => {
       backgroundColor: blue[900],
     },
   }));
-  console.log(user);
   return (
     <>
       <div>
@@ -89,23 +91,29 @@ const Profile = () => {
           file: user?.profilePhotoURL ?? null,
         }}
         onSubmit={(values) => {
-          console.log("values", values);
           let formData = new FormData();
           formData.append("name", values.name);
           formData.append("surname", values.surname);
           formData.append("uploaded_file", values.file);
           axios
-            .post(`http://localhost:8080/api/user`, formData, {
-              headers: {
-                "x-access-token": storageUser?.token,
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "multipart/form-data",
-                Accept: "application/json",
-              },
-            })
+            .post(
+              `${process.env.REACT_APP_SERVER_BASE_URL}/api/user`,
+              formData,
+              {
+                headers: {
+                  "x-access-token": storageUser?.token,
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "multipart/form-data",
+                  Accept: "application/json",
+                },
+              }
+            )
             .then((res) => {
               toast.success(res.data.message);
-              console.log(res);
+              localStorage.setItem(
+                "user",
+                JSON.stringify({ ...storageUser, ...res.data.doc })
+              );
             });
         }}
       >

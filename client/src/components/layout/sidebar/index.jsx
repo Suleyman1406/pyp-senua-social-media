@@ -1,5 +1,5 @@
-import React, {useContext, useCallback} from "react";
-import {postModuleContext} from '../../../context/postModuleContext'
+import React, { useContext, useCallback } from "react";
+import { postModuleContext } from "../../../context/postModuleContext";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
@@ -58,16 +58,21 @@ const ColorButton = styled(Button)(({ theme }) => ({
 export default function Navigator(props) {
   const queryClient = useQueryClient();
   const currentUser = queryClient.getQueryData("user");
+  const storageUser = JSON.parse(localStorage.getItem("user"));
+
+  console.log('currentuser', storageUser);
   const navigate = useNavigate();
 
   const { setShow } = useContext(postModuleContext);
 
   const signOut = useCallback(() => {
-    axios.post("http://localhost:8080/api/auth/signout").then(() => {
-      localStorage.removeItem("user");
-      queryClient.setQueryData("user", null);
-      navigate("/login");
-    });
+    axios
+      .post(process.env.REACT_APP_SERVER_BASE_URL + "/api/auth/signout")
+      .then(() => {
+        localStorage.removeItem("user");
+        queryClient.setQueryData("user", null);
+        navigate("/login");
+      });
   }, [queryClient, navigate]);
 
   const { ...other } = props;
@@ -81,11 +86,14 @@ export default function Navigator(props) {
               style={{ display: "block", textAlign: "center" }}
             >
               <img
-                src={currentUser?.profilePhotoURL ?? DefPerson}
+                src={
+                  `${process.env.REACT_APP_SERVER_BASE_URL}/${currentUser?.profilePhotoURL}` ??
+                  DefPerson
+                }
                 className={styles.image}
                 alt=""
               />
-              <p className={styles.name}>{currentUser?.username ?? "user"}</p>
+              <p className={styles.name}>{storageUser?.username ?? "user"}</p>
             </ListItem>
             {children.map(({ id: childId, icon, active, to }) => (
               <Link to={to} className={styles.route} key={childId}>

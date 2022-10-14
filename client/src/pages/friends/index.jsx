@@ -8,22 +8,20 @@ import SingleUser from "components/pages/single-user/SingleUser";
 import AddModal from "components/pages/add-modal/AddModal";
 import RequestsModal from "components/pages/requests-modal/RequestsModal";
 
-
 const FriendsPage = () => {
-  const [addModal, setAddModal]=useState(false)
-  const [reqModal,setReqModal]=useState(false)
+  const [addModal, setAddModal] = useState(false);
+  const [reqModal, setReqModal] = useState(false);
 
-
-  async function getData(){
-const res=await fetch('http://localhost:8080/api/auth/signup')
-const data=await res.json()
-console.log(data);
+  async function getData() {
+    const res = await fetch(
+      process.env.REACT_APP_SERVER_BASE_URL + "/api/auth/signup"
+    );
+    const data = await res.json();
+    console.log(data);
   }
-  getData()
+  getData();
 
- 
   return (
-
     <React.Fragment>
       <CssBaseline />
       <Container
@@ -39,27 +37,37 @@ console.log(data);
           spacing={2}
           direction="row"
         >
-          <Button style={{ width: "250px",marginTop:'22px' }} size="large" variant="outlined" onClick={()=>setAddModal(!addModal)}>
+          <Button
+            style={{ width: "250px", marginTop: "22px" }}
+            size="large"
+            variant="outlined"
+            onClick={() => setAddModal(!addModal)}
+          >
             Add Friends
           </Button>
-          <Button style={{ width: "250px",marginTop:'22px' }} size="large" variant="contained" onClick={()=>setReqModal(!reqModal)}>
+          <Button
+            style={{ width: "250px", marginTop: "22px" }}
+            size="large"
+            variant="contained"
+            onClick={() => setReqModal(!reqModal)}
+          >
             Requests
           </Button>
         </Stack>
         <Container
           maxWidth="sm"
-          style={{ height: "70vh", backgroundColor: "#fff", marginTop: "20px",overflowY:'scroll' }}
+          style={{
+            height: "70vh",
+            backgroundColor: "#fff",
+            marginTop: "20px",
+            overflowY: "scroll",
+          }}
         >
           <SingleUser />
         </Container>
       </Container>
-      {
-        addModal &&  <AddModal setAddModal={setAddModal}/>
-      }
-    {
-      reqModal && <RequestsModal setReqModal={setReqModal}/>
-    }
-  
+      {addModal && <AddModal setAddModal={setAddModal} />}
+      {reqModal && <RequestsModal setReqModal={setReqModal} />}
     </React.Fragment>
   );
 };
