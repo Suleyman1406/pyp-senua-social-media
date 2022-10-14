@@ -1,5 +1,6 @@
 import Root from "components/layout/root";
 import ChatPage from "pages/chat";
+import ForgotPassword from "pages/forgot-password";
 import FriendsPage from "pages/friends";
 import HomePage from "pages/home";
 import LoginPage from "pages/login";
@@ -16,7 +17,6 @@ export const router = createBrowserRouter([
         path: "",
         element: <HomePage />,
       },
-      
       {
         path: "friends",
         element: <FriendsPage />,
@@ -38,5 +38,9 @@ export const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUpPage />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
   },
 ]);
