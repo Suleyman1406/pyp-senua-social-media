@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import { useQuery } from "react-query";
+import { Avatar } from "@mui/material";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import DefPerson from "images/defPerson.jpg";
 import styles from "./home.module.css";
 import axios from "axios";
-import { useQuery } from "react-query";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import { Avatar } from "@mui/material";
-import DefPerson from "../../images/defPerson.jpg";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 const HomePage = () => {
   const matches = useMediaQuery("(min-width:900px)");
@@ -29,10 +29,9 @@ const HomePage = () => {
   }
 
   if (isError) {
-    return <div>{JSON.stringify(error)}</div>;
+    return <div>{JSON.stringify(error.message)}</div>;
   }
   function sendLike(item, idx) {
-    console.log(item);
     axios
       .post(
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/posts/toggle-like/${item.id}`,
