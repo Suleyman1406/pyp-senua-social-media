@@ -15,9 +15,7 @@ const RequestsModal = ({ setReqModal }) => {
         <h4>Invitations</h4>
         <Invitation />
         <div className="btn-container">
-          <button type="button" className="btn confirm-btn">
-            remove all
-          </button>
+       
           <button
             type="button"
             className="btn clear-btn"

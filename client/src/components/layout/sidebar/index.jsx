@@ -1,5 +1,5 @@
-import React, {useContext, useCallback} from "react";
-import {postModuleContext} from '../../../context/postModuleContext'
+import React, { useContext, useCallback } from "react";
+import { postModuleContext } from "../../../context/postModuleContext";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
@@ -84,7 +84,10 @@ export default function Navigator(props) {
               style={{ display: "block", textAlign: "center" }}
             >
               <img
-                src={storageUser?.profilePhotoURL ?? DefPerson}
+                src={
+                  `http://localhost:8080/${currentUser?.profilePhotoURL}` ??
+                  DefPerson
+                }
                 className={styles.image}
                 alt=""
               />

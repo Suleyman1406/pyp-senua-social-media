@@ -10,33 +10,34 @@ import styles from "./menu.module.css"
 import { useNavigate } from 'react-router-dom';
 export default function Menu() {
   const navigate = useNavigate()
-  function profile() {
-    navigate('/profile')
-  }
-  function addPost() {
-    navigate('/profile')
-  }
-  function friends() {
-    navigate('/friends')
-  }
-  function chat() {
-    navigate('/chat')
-  }
-  function logOut() {
+
+  function goLogout() {
     navigate('/login')
   }
+  function goProfile() {
+    navigate('/profile')
+  }
+  function goFriends() {
+    navigate('/friends')
+  }
+  function goChat() {
+    navigate('/chat')
+  }
+  function goLogout() {
+    navigate('/login')
+  }
+  function goHome() {
+    navigate('/')
+  }
   return (
-    <Box className={styles.box} sx={{ flexGrow: 1, }}>
-      <AppBar position="static" >
-        <Toolbar style={{ backgroundColor: '#00798C' , display:"flex", justifyContent:"space-around"}}>
-          <Button color="inherit" onClick={profile}>Profile</Button>
-          <Button color="inherit" onClick={addPost}>Add Post</Button>
-
-          <Button color="inherit" onClick={friends}>Friends</Button>
-          <Button color="inherit" onClick={chat}>Chat</Button>
-
-          <Button color="inherit" onClick={logOut}>Log out</Button>
-
+    <Box className={styles.box} sx={{ flexGrow: 1 }}>
+      <AppBar position="static" style={{ justifyContent: "space-around" }} >
+        <Toolbar style={{ backgroundColor: '#00798C', justifyContent: "space-around" }}>
+          <Button color="inherit" onClick={goHome}>Home</Button>
+          <Button color="inherit" onClick={goProfile}>Profile</Button>
+          <Button color="inherit" onClick={goFriends}>Friends</Button>
+          <Button color="inherit" onClick={goChat}>Chat</Button>
+          <Button color="inherit" onClick={goLogout}>Log out</Button>
         </Toolbar>
       </AppBar>
     </Box>
