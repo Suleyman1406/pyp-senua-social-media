@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { io } from "socket.io-client";
+import { format, render, cancel, register } from 'timeago.js';
 
 import { Container } from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -96,16 +96,26 @@ function Index({ currentChat, socket }) {
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
-  console.log(messages)
+  console.log(messages);
 
   return (
     <Container sx={{ px: 3, position: "relative" }}>
       <div style={{ height: "75vh", padding: "10px 0", overflowY: "auto" }}>
         {messages?.map((message) => (
-          <div style={{ marginTop: "20px" }} ref={scrollRef}>
+          <div
+            style={{
+              marginTop: "25px",
+              display: "flex",
+              justifyContent: `${
+                message.sender !== currentUser.id ? "start" : "end"
+              }`,
+            }}
+            ref={scrollRef}
+          >
             <Box
               sx={{
                 m: 0,
+                position: "relative",
                 width: "300px",
                 p: 2,
                 display: "flex",
@@ -120,8 +130,8 @@ function Index({ currentChat, socket }) {
                   width: "40px",
                   height: "40px",
                   borderRadius: "50%",
-                  marginRight: "20px",
-                  order: '2'
+                  marginRight: message.sender === currentUser.id ? "0" : "20px",
+                  order: message.sender === currentUser.id ? "2" : "1",
                 }}
               />
               <p
@@ -129,50 +139,25 @@ function Index({ currentChat, socket }) {
                   width: "300px",
                   wordWrap: "breakWord",
                   wordBreak: "break-word",
-                  order : message.send
+                  order: message.sender === currentUser.id ? "1" : "2",
                 }}
               >
                 {message.text}
               </p>
+              <span
+                style={{
+                  position: "absolute",
+                  fontSize: "10px",
+                  bottom: "-15px",
+                  right: message.sender === currentUser.id && "0px",
+                  left: message.sender !== currentUser.id && "0px",
+                }}
+              >
+                {format(message.createdAt)}
+              </span>
             </Box>
           </div>
         ))}
-
-        <div
-          div
-          style={{ marginTop: "20px", display: "flex", justifyContent: "end" }}
-        >
-          <Box
-            sx={{
-              width: "300px",
-              p: 2,
-              display: "flex",
-              alignItems: "top",
-              border: "1px solid rgb(0 0 0 / 10%)",
-              borderRadius: "10px",
-              textAlign: "end",
-            }}
-          >
-            <p
-              style={{
-                width: "300px",
-                wordWrap: "breakWord",
-                wordBreak: "break-word",
-              }}
-            >
-              ksdufcbjsgfcsfbkabekusb
-            </p>
-            <img
-              src={DefPerson}
-              style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                marginLeft: "20px",
-              }}
-            />
-          </Box>
-        </div>
       </div>
       <Paper
         component="form"
