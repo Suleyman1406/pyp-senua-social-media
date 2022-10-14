@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -27,7 +27,7 @@ const styles = {
 
 const SignupPage = () => {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -63,14 +63,17 @@ const SignupPage = () => {
     onSubmit: (values) => {
       setLoading(true);
       axios
-        .post("http://localhost:8080/api/auth/signup", values)
+        .post(
+          process.env.REACT_APP_SERVER_BASE_URL + "/api/auth/signup",
+          values
+        )
         .then((res) => {
           setLoading(false);
           if (res.status == 200) {
             toast.success(res.data.message);
-            setTimeout(()=> {
-              navigate('/login')
-            }, 1500)
+            setTimeout(() => {
+              navigate("/login");
+            }, 1500);
           }
         })
         .catch((res) => {
@@ -230,5 +233,3 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
-
-

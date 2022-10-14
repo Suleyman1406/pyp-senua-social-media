@@ -2,7 +2,9 @@ import React, { useState } from "react";
 
 const Image = ({ file }) => {
   const [preview, setpreview] = useState(
-    typeof file === "string" ? `http://localhost:8080/${file}` : null
+    typeof file === "string"
+      ? `${process.env.REACT_APP_SERVER_BASE_URL}/${file}`
+      : null
   );
   if (typeof file !== "string") {
     const reader = new FileReader();

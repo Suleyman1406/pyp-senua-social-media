@@ -25,7 +25,7 @@ const AddModal = ({ setAddModal }) => {
     const user = JSON.parse(localStorage.getItem("user"));
 
     axios
-      .get(`http://localhost:8080/api/user/${inputText}`, {
+      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/user/${inputText}`, {
         headers: {
           "x-access-token": user?.token,
           "content-type": "application/json",
@@ -36,27 +36,35 @@ const AddModal = ({ setAddModal }) => {
   }
   function addAsFriend() {
     const user = JSON.parse(localStorage.getItem("user"));
-console.log("user id", user.id);
+    console.log("user id", user.id);
     axios
-      .post(`http://localhost:8080/api/requests/create/${friend.id}`,{}, {
-        headers: {
-          "x-access-token": user?.token,
-          "content-type": "application/json",
-        },
-      })
+      .post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/requests/create/${friend.id}`,
+        {},
+        {
+          headers: {
+            "x-access-token": user?.token,
+            "content-type": "application/json",
+          },
+        }
+      )
       .then((res) => console.log(res));
   }
 
-  function cancelReq(){
-    const user=JSON.parse(localStorage.getItem("user"));
-    axios.post(`http://localhost:8080/api/requests/cancel/${friend.id}`, {}, {
-      headers: {
-        "x-access-token": user?.token,
-        "content-type": "application/json",
-      },
-    })
-    .then((res) => console.log(res));
-
+  function cancelReq() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    axios
+      .post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/requests/cancel/${friend.id}`,
+        {},
+        {
+          headers: {
+            "x-access-token": user?.token,
+            "content-type": "application/json",
+          },
+        }
+      )
+      .then((res) => console.log(res));
   }
   return (
     <aside className="modal-container" onClick={() => setAddModal(false)}>
@@ -112,19 +120,15 @@ console.log("user id", user.id);
                         style={{
                           marginTop: "-30px",
                           fontSize: "13px",
-                          backgroundColor:isActive ? '':'#be2625'
+                          backgroundColor: isActive ? "" : "#be2625",
                         }}
                         variant="contained"
-                        onClick={() =>{
-                         isActive? addAsFriend(): cancelReq()
-                          setIsActive(!isActive)
-                        }
-                      }
+                        onClick={() => {
+                          isActive ? addAsFriend() : cancelReq();
+                          setIsActive(!isActive);
+                        }}
                       >
-                     {
-                        isActive? 
-                     "add as friend":'cancel'
-                     }  
+                        {isActive ? "add as friend" : "cancel"}
                       </Button>
                     </Typography>
                   </React.Fragment>
