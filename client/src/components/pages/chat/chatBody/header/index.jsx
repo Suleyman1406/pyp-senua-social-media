@@ -20,20 +20,20 @@ function Index({ currentChat }) {
     >
       <img
         src={
-          currentChat.members[1]?.id === currentUser.id
-            ? currentChat.members[1].profilePhotoURL
+          currentChat.members[1]?._id === currentUser.id
+            ? currentChat.members[0].profilePhotoURL
               ? process.env.REACT_APP_SERVER_BASE_URL +
-                currentChat.members[1].profilePhotoURL
+                currentChat.members[0].profilePhotoURL
               : DefPerson
-            : currentChat.members[0].profilePhotoURL
+            : currentChat.members[1].profilePhotoURL
             ? process.env.REACT_APP_SERVER_BASE_URL +
-              currentChat.members[0].profilePhotoURL
+              currentChat.members[1].profilePhotoURL
             : DefPerson
         }
-        style={{ width: "50px", borderRadius: "50%" }}
+        style={{ width: "50px", height: '50px', borderRadius: "50%" }}
       />
       <span style={{ fontSize: "20px", marginLeft: "30px" }}>
-      {currentChat.members[0]?.id === currentUser.id ? currentChat.members[0].username : currentChat.members[1].username}
+      {currentChat.members[0]?._id === currentUser.id ? currentChat.members[1].username : currentChat.members[0].username}
       </span>
       <div style={{ width: "100%", textAlign: "end" }}>
         <IconButton aria-label="delete">
