@@ -1,5 +1,6 @@
 import { Button, Divider, TextField } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import style from "./profile.module.css";
 import { styled } from "@mui/material/styles";
 import { blue } from "@mui/material/colors";
@@ -42,7 +43,23 @@ const Profile = () => {
       });
   }, [storageUser?.token, storageUser.username]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <ThreeDots
+        height="100"
+        width="100"
+        radius="9"
+        color="rgb(187,37,37)"
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{
+          justifyContent: "center",
+          height: "80vh",
+          alignItems: "center",
+        }}
+        wrapperClassName=""
+        visible={true}
+      />
+    );
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(blue[500]),
     backgroundColor: "#00798C",

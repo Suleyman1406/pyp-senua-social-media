@@ -36,31 +36,41 @@ exports.createRequest = (req, res) => {
     res.status(500).send({ message: "Cannot add yourself as a friend" });
     return;
   }
-  Request.findOne(
-    { to: toId, from: currentUserId, status: "Pending" },
-    (err, result) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-      if (result) {
-        res.status(200).send({ message: "Request was sent successfully" });
-        return;
-      }
-
-      const request = new Request({
-        from: currentUserId,
-        to: toId,
-      });
-      request.save((err) => {
+  User.findOne({ _id: currentUserId, friends: { $in: toId } }, (err, doc) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    if (doc) {
+      res.status(500).send({ message: "Already friends" });
+      return;
+    }
+    Request.findOne(
+      { to: toId, from: currentUserId, status: "Pending" },
+      (err, result) => {
         if (err) {
           res.status(500).send({ message: err });
           return;
         }
-        res.status(200).send({ message: "Request was sent successfully" });
-      });
-    }
-  );
+        if (result) {
+          res.status(200).send({ message: "Request was sent successfully" });
+          return;
+        }
+
+        const request = new Request({
+          from: currentUserId,
+          to: toId,
+        });
+        request.save((err) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+          res.status(200).send({ message: "Request was sent successfully" });
+        });
+      }
+    );
+  });
 };
 
 exports.cancelRequest = (req, res) => {
