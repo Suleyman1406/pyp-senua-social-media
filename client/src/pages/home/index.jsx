@@ -12,12 +12,15 @@ const HomePage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [checklike, setCheckLike] = useState(false);
   const { isLoading, isError, data, error } = useQuery("posts", async () => {
-    const { data } = await axios.get("http://localhost:8080/api/posts/all", {
-      headers: {
-        "x-access-token": user?.token,
-        "content-type": "application/json",
-      },
-    });
+    const { data } = await axios.get(
+      process.env.REACT_APP_SERVER_BASE_URL + "/api/posts/all",
+      {
+        headers: {
+          "x-access-token": user?.token,
+          "content-type": "application/json",
+        },
+      }
+    );
     return data;
   });
 
@@ -32,7 +35,7 @@ const HomePage = () => {
     console.log(item);
     axios
       .post(
-        `http://localhost:8080/api/posts/toggle-like/${item.id}`,
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/posts/toggle-like/${item.id}`,
         {},
         {
           headers: {
@@ -81,7 +84,7 @@ const HomePage = () => {
                   {item.imgUrl && (
                     <div className={styles.main_img_container}>
                       <img
-                        src={`http://localhost:8080/${item.imgUrl}`}
+                        src={`${process.env.REACT_APP_SERVER_BASE_URL}/${item.imgUrl}`}
                         className={styles.main_img}
                         alt=""
                       />

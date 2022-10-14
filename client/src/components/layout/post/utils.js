@@ -23,18 +23,18 @@ export function checkIfFilesAreCorrectSize(file) {
 const currentUser = JSON.parse(localStorage.getItem("user"));
 
 export const createPost = async (data) => {
-    console.log(data);
-    const { data: response } = await axios.post(
-      "http://localhost:8080/api/posts/create",
-      data,
-      {
-        headers: {
-          "x-access-token": currentUser?.token,
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-        },
-      }
-    );
-    return response;
-  };
+  console.log(data);
+  const { data: response } = await axios.post(
+    process.env.REACT_APP_SERVER_BASE_URL + "/api/posts/create",
+    data,
+    {
+      headers: {
+        "x-access-token": currentUser?.token,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+      },
+    }
+  );
+  return response;
+};

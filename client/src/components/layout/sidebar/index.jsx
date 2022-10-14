@@ -63,11 +63,13 @@ export default function Navigator(props) {
   const { setShow } = useContext(postModuleContext);
 
   const signOut = useCallback(() => {
-    axios.post("http://localhost:8080/api/auth/signout").then(() => {
-      localStorage.removeItem("user");
-      queryClient.setQueryData("user", null);
-      navigate("/login");
-    });
+    axios
+      .post(process.env.REACT_APP_SERVER_BASE_URL + "/api/auth/signout")
+      .then(() => {
+        localStorage.removeItem("user");
+        queryClient.setQueryData("user", null);
+        navigate("/login");
+      });
   }, [queryClient, navigate]);
 
   const { ...other } = props;
@@ -82,7 +84,7 @@ export default function Navigator(props) {
             >
               <img
                 src={
-                  `http://localhost:8080/${currentUser?.profilePhotoURL}` ??
+                  `${process.env.REACT_APP_SERVER_BASE_URL}/${currentUser?.profilePhotoURL}` ??
                   DefPerson
                 }
                 className={styles.image}
