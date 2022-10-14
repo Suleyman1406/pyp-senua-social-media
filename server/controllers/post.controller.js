@@ -53,6 +53,15 @@ exports.getPosts = (_, res) => {
   });
 };
 
+exports.deleteAllPosts = (req, res) => {
+  Post.remove({}, (err) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.send({ message: "Posts were deleted successfully!" });
+  });
+};
 exports.createPost = (req, res) => {
   const { userId: currentUserId, file } = req;
   const { description } = req.body;
