@@ -64,7 +64,7 @@ const SignupPage = () => {
       setLoading(true);
       axios
         .post(
-          process.env.REACT_APP_SERVER_BASE_URL + "/api/auth/signup",
+          "http://localhost:8080"+ "/api/auth/signup",
           values
         )
         .then((res) => {

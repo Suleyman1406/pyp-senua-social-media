@@ -31,7 +31,7 @@ const Role = db.role;
 
 db.mongoose
   .connect(
-    `mongodb+srv://${dbConfig.USER}:${dbConfig.PASSWORD}@cluster0.ncrmizl.mongodb.net/?retryWrites=true&w=majority`,
+    `<db-url>`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

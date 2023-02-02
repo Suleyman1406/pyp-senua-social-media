@@ -20,7 +20,7 @@ export default function Invitation() {
   const user = JSON.parse(localStorage.getItem("user"));
   const { isLoading, data, refetch } = useQuery("user-requests", async () => {
     const { data } = await axios.get(
-      process.env.REACT_APP_SERVER_BASE_URL + "/api/requests/all",
+      "http://localhost:8080"+ "/api/requests/all",
       {
         headers: {
           "x-access-token": user?.token,

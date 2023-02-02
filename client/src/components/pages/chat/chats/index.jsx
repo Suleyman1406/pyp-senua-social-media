@@ -158,11 +158,11 @@ function Index({ setCurrentChat }) {
               src={
                 conv.members[1]._id === currentUser.id
                   ? conv.members[0].profilePhotoURL
-                    ? process.env.REACT_APP_SERVER_BASE_URL +
+                    ? "http://localhost:8080"+
                       conv.members[0].profilePhotoURL
                     : DefPerson
                   : conv.members[1].profilePhotoURL
-                  ? process.env.REACT_APP_SERVER_BASE_URL +
+                  ? "http://localhost:8080"+
                     conv.members[1].profilePhotoURL
                   : DefPerson
               }
@@ -228,7 +228,7 @@ function Index({ setCurrentChat }) {
                           borderRadius: "50%",
                         }}
                         src={
-                          process.env.REACT_APP_SERVER_BASE_URL +
+                          "http://localhost:8080"+
                           friend.profilePhotoURL
                         }
                       />

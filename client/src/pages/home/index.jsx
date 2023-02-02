@@ -15,7 +15,7 @@ const HomePage = () => {
   const queryClient = useQueryClient();
   const { isLoading, isError, data, error } = useQuery("posts", async () => {
     const { data } = await axios.get(
-      process.env.REACT_APP_SERVER_BASE_URL + "/api/posts/all",
+      "http://localhost:8080"+ "/api/posts/all",
       {
         headers: {
           "x-access-token": user?.token,

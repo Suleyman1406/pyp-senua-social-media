@@ -22,11 +22,11 @@ function Index({ currentChat }) {
         src={
           currentChat.members[1]?._id === currentUser.id
             ? currentChat.members[0].profilePhotoURL
-              ? process.env.REACT_APP_SERVER_BASE_URL +
+              ? "http://localhost:8080"+
                 currentChat.members[0].profilePhotoURL
               : DefPerson
             : currentChat.members[1].profilePhotoURL
-            ? process.env.REACT_APP_SERVER_BASE_URL +
+            ? "http://localhost:8080"+
               currentChat.members[1].profilePhotoURL
             : DefPerson
         }

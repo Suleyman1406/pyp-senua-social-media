@@ -18,7 +18,7 @@ export default function SingleUser() {
 
   const { isLoading, data, refetch } = useQuery("user-friends", async () => {
     const { data } = await axios.get(
-      process.env.REACT_APP_SERVER_BASE_URL + "/api/user/friends/all",
+      "http://localhost:8080"+ "/api/user/friends/all",
       {
         headers: {
           "x-access-token": user?.token,

@@ -66,7 +66,7 @@ export default function Navigator(props) {
 
   const signOut = useCallback(() => {
     axios
-      .post(process.env.REACT_APP_SERVER_BASE_URL + "/api/auth/signout")
+      .post("http://localhost:8080"+ "/api/auth/signout")
       .then(() => {
         localStorage.removeItem("user");
         queryClient.setQueryData("user", null);
